@@ -15,7 +15,7 @@
 
 .top-header {
   grid-area: h;
-  background-color: rgba(189, 189, 189, 0.16);
+  background-color: rgba(220, 220, 220, 0.22);
 }
 .top-header img {
  /* background-image: url("/src/images/smartCity.png");*/
@@ -23,7 +23,7 @@
 }
 
 .nav-block {
-  background-color: green;
+  background-color: rgba(87, 191, 182, 0.47);
   grid-area: n;
 }
 .nav-block ul li {
@@ -31,7 +31,7 @@
 }
 .nav-block ul li a {
   text-decoration: none;
-  color: #FFF;
+  color: #3a75b0;
 }
 
 .profile {
