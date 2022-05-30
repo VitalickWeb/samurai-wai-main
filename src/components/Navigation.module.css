@@ -1,0 +1,11 @@
+.nav-block {
+    background-color: rgba(47, 193, 211, 0.29);
+    grid-area: n;
+}
+.nav-block ul li {
+    list-style-type: none;
+}
+.nav-block ul li a {
+    text-decoration: none;
+    color: #14909b;
+}

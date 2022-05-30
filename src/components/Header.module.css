@@ -1,0 +1,15 @@
+.top-header {
+    grid-area: h;
+    background-color: rgba(220, 220, 220, 0.22);
+}
+.top-header img {
+    padding-left:  16%;
+    width: 80px;
+}
+.logo {
+    display: flex;
+}
+.item-header {
+    color: #092c4f;
+    padding-left: 4px;
+}

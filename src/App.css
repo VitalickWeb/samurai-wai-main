@@ -13,66 +13,6 @@
   overflow: hidden;
 }
 
-.top-header {
-  grid-area: h;
-  background-color: rgba(220, 220, 220, 0.22);
-}
-.top-header img {
- /* background-image: url("/src/images/smartCity.png");*/
-  width: 80px;
-}
 
-.nav-block {
-  background-color: rgba(87, 191, 182, 0.47);
-  grid-area: n;
-}
-.nav-block ul li {
-  list-style-type: none;
-}
-.nav-block ul li a {
-  text-decoration: none;
-  color: #3a75b0;
-}
 
-.profile {
-  background-color: yellowgreen;
-  grid-area: c;
-}
-.profile img {
-  width: 100%;
-  box-sizing: border-box;
-}
 
-.contain {
-  display: grid;
-  grid-template-areas:
-  "a" "m" "p" "p1" "p2";
-
-  grid-template-rows: 80px 80px 1fr;
-  grid-template-columns: 1fr 1fr;/*сколько равных частей будет занимать колонка*/
-  grid-gap: 10px;
-}
-.ava-desc {
-  grid-area: a;
-  background-color: #888;
-}
-
-.my-post {
-  grid-area: m;
-  background-color: #579fbf;
-}
-
-.new-post {
-  grid-area: p;
-  background-color: #57bfb6;
-}
-
-.post-1 {
-  grid-area: p1;
-  background-color: #bf9557;
-}
-
-.post-2 {
-  grid-area: p2;
-  background-color: #d06ba4;
-}
