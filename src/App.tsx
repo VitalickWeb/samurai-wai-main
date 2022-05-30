@@ -1,13 +1,12 @@
 import React from 'react';
 import './App.css';
-import './components/Header.module.css';
-import './components/Navigation.module.css';
-import './components/Profile.module.css';
+import './components/header/Header.module.css';
+import './components/navigation/Navigation.module.css';
+import './components/profile/Profile.module.css';
 
-import { Header } from './components/Header';
-import { Navigation } from './components/Navigation';
-import { Profile } from './components/Profile';
-
+import { Header } from './components/header/Header';
+import { Navigation } from './components/navigation/Navigation';
+import { Profile } from './components/profile/Profile';
 
 const App = () => {
     return (//в div оборачиваем все приложение

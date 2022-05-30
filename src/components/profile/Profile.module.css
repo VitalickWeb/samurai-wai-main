@@ -1,0 +1,13 @@
+
+.profile {
+    grid-area: c;
+}
+.profile img {
+    width: 100%;
+
+}
+
+.avaDesc {
+    grid-area: a;
+    background-color: #888;
+}

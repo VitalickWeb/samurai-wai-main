@@ -1,0 +1,16 @@
+.navBlock {
+    background-color: rgba(47, 193, 211, 0.29);
+    grid-area: n;
+}
+.navBlock ul li {
+    list-style-type: none;
+    line-height: 30px;
+    text-transform: uppercase;
+}
+.navBlock ul li a {
+    text-decoration: none;
+    color: #14909b;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}

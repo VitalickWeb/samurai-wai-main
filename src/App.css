@@ -7,7 +7,7 @@
   "h h"
   "n c";
 
-  grid-template-rows: 80px 1fr;
+  grid-template-rows: 84px 1fr;
   grid-template-columns: 2fr 8fr;/*сколько равных частей будет занимать колонка*/
   grid-gap: 10px; /*расстояние между элементами*/
   overflow: hidden;

@@ -1,0 +1,21 @@
+.contain {
+    display: grid;
+    grid-template-areas:
+    "a" "m" "p" "p1" "p2";
+
+    grid-template-rows: 80px 80px 1fr;
+    grid-template-columns: 1fr;/*сколько равных частей будет занимать колонка*/
+    grid-gap: 10px;
+}
+.myPost {
+    grid-area: m;
+    background-color: #579fbf;
+}
+
+.newPost {
+    grid-area: p;
+    background-color: #57bfb6;
+}
+.post1 {
+    grid-area: p1;
+}
