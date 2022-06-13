@@ -13,6 +13,9 @@
   overflow: hidden;
 }
 
-
+.app-wrapper-content {
+  grid-area: c;
+  background-color: rgba(169, 169, 169, 0.1);
+}
 
 

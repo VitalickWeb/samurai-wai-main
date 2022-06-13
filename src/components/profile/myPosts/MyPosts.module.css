@@ -1,21 +1,24 @@
 .contain {
     display: grid;
     grid-template-areas:
-    "a" "m" "p" "p1" "p2";
+    "a" "m" "p" "p1" "p2" "p3";
 
-    grid-template-rows: 80px 80px 1fr;
-    grid-template-columns: 1fr;/*сколько равных частей будет занимать колонка*/
+    grid-template-columns: 1fr; /*сколько равных частей будет занимать колонка*/
     grid-gap: 10px;
+    margin-left: 20px;
+    margin-bottom: 20px;
 }
+
 .myPost {
     grid-area: m;
     background-color: #579fbf;
 }
 
-.newPost {
+.writePost {
     grid-area: p;
-    background-color: #57bfb6;
+    margin: 20px 0 0 0;
+    background-color: #579FBF;
 }
-.post1 {
-    grid-area: p1;
+.message {
+    margin-bottom: 10px;
 }

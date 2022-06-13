@@ -1,0 +1,15 @@
+.image {
+    width: 100%;
+    height: 300px;
+    background-image: url("https://static1.gensler.com/uploads/image/41812/filename/_000-cities-comfidential-2000x1125_1642627052.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.avaDesc {
+    grid-area: a;
+    background-color: #888;
+    margin: 20px 0 0 20px;
+
+}

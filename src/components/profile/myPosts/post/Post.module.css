@@ -1,9 +1,23 @@
+/*.blockPosts {*/
+/*    margin-top: 20px;*/
+/*}*/
 
 .post1 .img_ava {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    margin-left: 25px;
 }
-.post1 {
-   background-color: #579fbf;
+.accountItems {
+    width: 80%;
+    padding: 15px 0;
+    background-color: rgba(47, 193, 211, 0.29);
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.message {
+    margin-left: 30px;
 }
