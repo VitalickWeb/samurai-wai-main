@@ -16,12 +16,10 @@ export const DialogUsers = (props: DialogsUsersPropsType) => {
     const usersRender = props.dataUsers.map(u => {
         let path = `/dialogs/${u.id}`
         return (
-            <div key={u.id}>
-                <NavLink to={path}>{u.dialog}</NavLink>
+            <div key={u.id} className={st.users}>
+                <NavLink to={path} activeClassName={st.usersName}>{u.dialog}</NavLink>
             </div>
-
         );
-
     })
 
     return (
