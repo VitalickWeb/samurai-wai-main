@@ -12,7 +12,6 @@ type DialogsUsersPropsType = {
 }
 
 export const DialogUsers = (props: DialogsUsersPropsType) => {
-    //debugger
     const usersRender = props.dataUsers.map(u => {
         let path = `/dialogs/${u.id}`
         return (
