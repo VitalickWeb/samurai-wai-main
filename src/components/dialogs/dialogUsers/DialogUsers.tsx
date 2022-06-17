@@ -1,5 +1,5 @@
 import React from "react";
-import st from "../Dialogs.module.css";
+import st from "./DialogUsers.module.css";
 import {NavLink} from "react-router-dom";
 
 export type UsersType = {
@@ -16,7 +16,7 @@ export const DialogUsers = (props: DialogsUsersPropsType) => {
         let path = `/dialogs/${u.id}`
         return (
             <div key={u.id} className={st.users}>
-                <NavLink to={path} activeClassName={st.usersName}>{u.dialog}</NavLink>
+                <NavLink to={path} className={st.usersName}>{u.dialog}</NavLink>
             </div>
         );
     })

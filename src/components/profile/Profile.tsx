@@ -7,7 +7,7 @@ type ProfileType = {
     postData: Array<PostType>
 }
 
-export const Profile = (props: ProfileType) => {
+export const Profile: React.FC<ProfileType> = (props) => {
     return (
         <div>
             <ProfileInfo/>

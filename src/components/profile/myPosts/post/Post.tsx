@@ -12,7 +12,6 @@ type PostPropsType = {
 }
 
 export const Post = (props: PostPropsType) => {
-    //debugger
     const postsRender = props.dialogMessage.map(p => {
         return (
             <div key={p.id} className={st.accountItems}>

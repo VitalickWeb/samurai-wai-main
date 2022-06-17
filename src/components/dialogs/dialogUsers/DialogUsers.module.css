@@ -1,5 +1,6 @@
 
-.dialog a.usersName {
+.usersName {
     color: #14879b;
     text-decoration: none;
+    font-size: 20px;
 }
