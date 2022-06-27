@@ -7,6 +7,12 @@ type MyPostsType = {
 }
 
 export const MyPosts = (props: MyPostsType) => {
+    let newPostElem = React.createRef<HTMLTextAreaElement>()
+
+    const addPost = () => {
+        alert(newPostElem.current?.value)
+    }
+
     return (
         <div className={st.contain}>
             <div>
@@ -14,10 +20,10 @@ export const MyPosts = (props: MyPostsType) => {
                     <h3>My post</h3>
                 </div>
                 <div className={st.writePost}>
-                    <textarea></textarea>
+                    <textarea ref={newPostElem}></textarea>
                 </div>
                 <div className={st.buttonAddPost}>
-                    <button>add post</button>
+                    <button onClick={addPost}>add post</button>
                 </div>
             </div>
 

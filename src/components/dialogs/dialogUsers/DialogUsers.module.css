@@ -1,6 +1,28 @@
+.users {
+    background-color: lightskyblue;
+    margin-bottom: 2px;
+}
+
+.users .items {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.users img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
 
 .usersName {
-    color: #14879b;
+    color: rgba(255, 255, 255, 0.93);
     text-decoration: none;
     font-size: 20px;
+    margin-left: 10px;
+}
+
+.usersName .name {
+    display: flex;
+    align-items: flex-start;
 }

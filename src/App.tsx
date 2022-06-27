@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 import './components/header/Header.module.css';
 import './components/navigation/Navigation.module.css';
@@ -16,8 +16,9 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import {PostType} from "./components/profile/myPosts/post/Post";
 import {UsersType} from "./components/dialogs/dialogUsers/DialogUsers";
 import {DialogsMessagesType} from "./components/dialogs/dialogMessages/DialogMessages";
+import state from "./redux/State";
 
-type AppPropsType = {
+export type AppPropsType = {
     posts: Array<PostType>
     dataUsers: Array<UsersType>
     dataMessage: Array<DialogsMessagesType>

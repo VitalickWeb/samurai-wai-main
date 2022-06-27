@@ -1,0 +1,69 @@
+.blockAllItems {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.blockItem {
+    width: 100%;
+    display: flex;
+}
+
+.blockItem img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.blockItem:nth-child(even) {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.blockItem .blockImg {
+    display: flex;
+    align-items: flex-end;
+}
+
+.messagesItem {
+    position: relative;
+    background-color: azure;
+    max-width: 40%;
+    height: auto;
+    border-radius: 5px;
+    padding: 10px 10px 10px 10px;
+    margin-bottom: 2px;
+    color: #555;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+}
+
+.messagesItem .blockMessage {
+    word-break: break-word;
+    margin: 0;
+}
+
+.blockForm {
+    display: flex;
+    padding-top: 180px;
+}
+
+.blockAllItems .blockInput textarea {
+    width: 200px;
+}
+
+/*.triangle {*/
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    left: -20px;*/
+/*    width: 0;*/
+/*    height: 0;*/
+/*    border: 0 solid transparent;*/
+/*    border-right-width: 0px;*/
+/*    border-left-width: 30px;*/
+/*    border-bottom: 20px solid rgba(215, 215, 215, 0.96);*/
+/*    display: flex;*/
+/*    color: red;*/
+/*}*/

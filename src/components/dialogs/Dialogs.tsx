@@ -9,7 +9,6 @@ type RootDialogsPropsType = {
 }
 
 export const Dialogs = (props: RootDialogsPropsType) => {
-    console.log(props)
     return (
         <div className={st.dialogs}>
             <div className={st.dialogItems}>
