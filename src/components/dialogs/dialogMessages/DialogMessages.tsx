@@ -29,7 +29,7 @@ export const DialogMessages = (props: DialogsMessagesPropsType) => {
 
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
-    const clickButtonHandler = () => {
+    const clickDialogHandler = () => {
         alert(newPostElement.current?.value)
     }
 
@@ -43,7 +43,7 @@ export const DialogMessages = (props: DialogsMessagesPropsType) => {
                     <textarea ref={newPostElement} placeholder="Write a message"></textarea>
                 </div>
                 <div className={st.blockButton}>
-                    <button onClick={clickButtonHandler}>submit</button>
+                    <button onClick={clickDialogHandler}>submit</button>
                 </div>
             </div>
         </div>

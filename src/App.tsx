@@ -22,6 +22,7 @@ export type AppPropsType = {
     posts: Array<PostType>
     dataUsers: Array<UsersType>
     dataMessage: Array<DialogsMessagesType>
+    addPost: (postMessage: string) => void
 }
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -34,6 +35,7 @@ const App: React.FC<AppPropsType> = (props) => {
                     <Route path="/profile" render={() =>
                         <Profile
                             postData={props.posts}
+                            addPost={props.addPost}
                         />}/>
                     <Route path="/dialogs" render={() =>
                         <Dialogs

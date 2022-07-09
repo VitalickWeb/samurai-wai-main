@@ -1,7 +1,7 @@
 import {PostType} from "../components/profile/myPosts/post/Post";
 import {UsersType} from "../components/dialogs/dialogUsers/DialogUsers";
 import {DialogsMessagesType} from "../components/dialogs/dialogMessages/DialogMessages";
-import { v1 } from "uuid";
+import {v1} from "uuid";
 
 type RootStateType = {
     posts: Array<PostType>
@@ -47,4 +47,14 @@ let state = {
     },
 }
 
+export const addPost = (postMessage: string) => {
+    const newPost: PostType = {
+        id: v1(),
+        message: postMessage,
+        likeCounts: 0,
+    }
+    state.profilePage.posts.push();
+}
+
 export default state;
+
