@@ -2,14 +2,27 @@ import {PostType} from "../components/profile/myPosts/post/Post";
 import {UsersType} from "../components/dialogs/dialogUsers/DialogUsers";
 import {DialogsMessagesType} from "../components/dialogs/dialogMessages/DialogMessages";
 import {v1} from "uuid";
+import {rerenderEntireTree} from "../render";
 
-type RootStateType = {
+export type ProfilePageType = {
     posts: Array<PostType>
+    newPostText: string
+}
+export type DialogPageType = {
     dataUsers: Array<UsersType>
     dataMessage: Array<DialogsMessagesType>
+    newDialogText: string
 }
 
-let state = {
+type SidebarType = {}
+
+export type RootStateType = {
+    profilePage: ProfilePageType
+    dialogPage: DialogPageType
+    sidebar: SidebarType
+}
+
+let state: RootStateType = {
     profilePage: {
         posts: [
             {id: v1(), message: 'Hello, how are you?', likeCounts: 4},
@@ -21,6 +34,7 @@ let state = {
             {id: v1(), message: 'Yo', likeCounts: 28},
             {id: v1(), message: 'Last message', likeCounts: 15},
         ],
+        newPostText: '...',
     },
     dialogPage: {
         dataUsers: [
@@ -44,7 +58,9 @@ let state = {
             {id: v1(), message: 'Yo'},
             {id: v1(), message: 'Last message'},
         ],
+        newDialogText: '...',
     },
+    sidebar: {},
 }
 
 export const addPost = (postMessage: string) => {
@@ -53,7 +69,28 @@ export const addPost = (postMessage: string) => {
         message: postMessage,
         likeCounts: 0,
     }
-    state.profilePage.posts.push();
+    state.profilePage.posts.push(newPost);
+    state.profilePage.newPostText = ''
+    rerenderEntireTree(state)
+}
+
+export const addDialog = (dialogMessage: string) => {
+    const newDialog: DialogsMessagesType = {
+        id: v1(),
+        message: dialogMessage,
+    }
+    state.dialogPage.dataMessage.push(newDialog)
+    state.dialogPage.newDialogText = ''
+    rerenderEntireTree(state)
+}
+
+export const newPostTextMessage = (newPost: string) => {
+    state.profilePage.newPostText = newPost
+    rerenderEntireTree(state)
+}
+
+export const newDialogTextMessage = (newDialog: string) => {
+    state.dialogPage.newDialogText = newDialog
 }
 
 export default state;

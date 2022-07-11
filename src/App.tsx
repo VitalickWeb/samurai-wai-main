@@ -16,13 +16,14 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import {PostType} from "./components/profile/myPosts/post/Post";
 import {UsersType} from "./components/dialogs/dialogUsers/DialogUsers";
 import {DialogsMessagesType} from "./components/dialogs/dialogMessages/DialogMessages";
-import state from "./redux/State";
+import state, {addDialog, RootStateType} from "./redux/State";
 
 export type AppPropsType = {
-    posts: Array<PostType>
-    dataUsers: Array<UsersType>
-    dataMessage: Array<DialogsMessagesType>
+    state: RootStateType
     addPost: (postMessage: string) => void
+    newPostTextMessage: (newPost: string) => void
+    addDialog: (dialogMessage: string) => void
+    newDialogTextMessage: (newDialog: string) => void
 }
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -34,13 +35,15 @@ const App: React.FC<AppPropsType> = (props) => {
                 <div className="app-wrapper-content">
                     <Route path="/profile" render={() =>
                         <Profile
-                            postData={props.posts}
+                            profilePage={props.state.profilePage}
                             addPost={props.addPost}
+                            newPostTextMessage={props.newPostTextMessage}
                         />}/>
                     <Route path="/dialogs" render={() =>
                         <Dialogs
-                            dataUsers={props.dataUsers}
-                            dataMessage={props.dataMessage}
+                            dialogPage={props.state.dialogPage}
+                            addDialog={props.addDialog}
+                            newDialogTextMessage={props.newDialogTextMessage}
                         />}/>
                     <Route path="/news" render={() => <News/>}/>
                     <Route path="/music" render={() => <Music/>}/>

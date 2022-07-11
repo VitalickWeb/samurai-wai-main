@@ -1,5 +1,6 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import st from "./DialogMessages.module.css";
+import {DialogPageType} from "../../../redux/State";
 
 export type DialogsMessagesType = {
     id: string
@@ -7,7 +8,10 @@ export type DialogsMessagesType = {
 }
 
 type DialogsMessagesPropsType = {
+    dialogPage: DialogPageType
     dialogsMessages: Array<DialogsMessagesType>
+    addDialog: (dialogMessage: string) => void
+    newDialogTextMessage: (newDialog: string) => void
 }
 
 export const DialogMessages = (props: DialogsMessagesPropsType) => {
@@ -27,10 +31,12 @@ export const DialogMessages = (props: DialogsMessagesPropsType) => {
         );
     })
 
-    let newPostElement = React.createRef<HTMLTextAreaElement>()
+    const addDialogHandler = () => {
+        props.addDialog(props.dialogPage.newDialogText)
+    }
 
-    const clickDialogHandler = () => {
-        alert(newPostElement.current?.value)
+    const newDialogMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.newDialogTextMessage(e.currentTarget.value)
     }
 
     return (
@@ -40,10 +46,14 @@ export const DialogMessages = (props: DialogsMessagesPropsType) => {
             </div>
             <div className={st.blockForm}>
                 <div className={st.blockInput}>
-                    <textarea ref={newPostElement} placeholder="Write a message"></textarea>
+                    <textarea
+                        placeholder="Write a message"
+                        value={props.dialogPage.newDialogText}
+                        onChange={newDialogMessageHandler}
+                    />
                 </div>
                 <div className={st.blockButton}>
-                    <button onClick={clickDialogHandler}>submit</button>
+                    {<button onClick={addDialogHandler}>submit</button>}
                 </div>
             </div>
         </div>

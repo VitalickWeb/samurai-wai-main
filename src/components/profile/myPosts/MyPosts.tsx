@@ -1,19 +1,21 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import st from "./MyPosts.module.css";
-import {Post, PostType} from "./post/Post";
+import {Post} from "./post/Post";
+import {ProfilePageType} from "../../../redux/State";
 
 type MyPostsType = {
-    postData: Array<PostType>
+    profilePage: ProfilePageType
     addPost: (postMessage: string) => void
+    newPostTextMessage: (dialogMessage: string) => void
 }
 
 export const MyPosts = (props: MyPostsType) => {
-    let newPostElem = React.createRef<HTMLTextAreaElement>()
-
     const addPost = () => {
-        if (newPostElem.current) {
-            props.addPost(newPostElem.current.value)
-        }
+        props.addPost(props.profilePage.newPostText)
+    }
+
+    const onChangePostValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.newPostTextMessage(e.currentTarget.value)
     }
 
     return (
@@ -23,17 +25,20 @@ export const MyPosts = (props: MyPostsType) => {
                     <h3>My post</h3>
                 </div>
                 <div className={st.writePost}>
-                    <textarea ref={newPostElem}></textarea>
+                    <textarea
+                        value={props.profilePage.newPostText}
+                        onChange={onChangePostValue}
+                    />
                 </div>
                 <div className={st.buttonAddPost}>
-                    <button onClick={addPost}>add post</button>
+                     <button onClick={addPost}>add post</button>
                 </div>
             </div>
 
             <div className={st.PostsMessages}>
                 <div className={st.message}>
                     <Post
-                        dialogMessage={props.postData}
+                        dialogMessage={props.profilePage.posts}
                     />
                 </div>
             </div>

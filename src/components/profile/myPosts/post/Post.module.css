@@ -1,6 +1,6 @@
-/*.blockPosts {*/
-/*    margin-top: 20px;*/
-/*}*/
+.blockPosts {
+    margin-top: 20px;
+}
 
 .post1 .img_ava {
     width: 50px;
@@ -17,7 +17,9 @@
     align-items: center;
     margin-bottom: 10px;
 }
-
-.message {
-    margin-left: 30px;
+.blockMessage {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
 }
+
