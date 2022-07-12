@@ -74,10 +74,10 @@ export const addPost = (postMessage: string) => {
     rerenderEntireTree(state)
 }
 
-export const addDialog = (dialogMessage: string) => {
+export const addDialog = () => {
     const newDialog: DialogsMessagesType = {
         id: v1(),
-        message: dialogMessage,
+        message: state.dialogPage.newDialogText,
     }
     state.dialogPage.dataMessage.push(newDialog)
     state.dialogPage.newDialogText = ''
@@ -91,6 +91,7 @@ export const newPostTextMessage = (newPost: string) => {
 
 export const newDialogTextMessage = (newDialog: string) => {
     state.dialogPage.newDialogText = newDialog
+    rerenderEntireTree(state)
 }
 
 export default state;

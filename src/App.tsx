@@ -22,7 +22,7 @@ export type AppPropsType = {
     state: RootStateType
     addPost: (postMessage: string) => void
     newPostTextMessage: (newPost: string) => void
-    addDialog: (dialogMessage: string) => void
+    addDialog: () => void
     newDialogTextMessage: (newDialog: string) => void
 }
 

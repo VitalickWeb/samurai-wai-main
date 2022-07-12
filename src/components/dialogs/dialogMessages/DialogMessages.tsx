@@ -1,6 +1,6 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, KeyboardEvent} from "react";
 import st from "./DialogMessages.module.css";
-import {DialogPageType} from "../../../redux/State";
+
 
 export type DialogsMessagesType = {
     id: string
@@ -8,9 +8,9 @@ export type DialogsMessagesType = {
 }
 
 type DialogsMessagesPropsType = {
-    dialogPage: DialogPageType
+    dialogPageText: string
     dialogsMessages: Array<DialogsMessagesType>
-    addDialog: (dialogMessage: string) => void
+    addDialog: () => void
     newDialogTextMessage: (newDialog: string) => void
 }
 
@@ -32,11 +32,17 @@ export const DialogMessages = (props: DialogsMessagesPropsType) => {
     })
 
     const addDialogHandler = () => {
-        props.addDialog(props.dialogPage.newDialogText)
+        props.addDialog()
     }
 
     const newDialogMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.newDialogTextMessage(e.currentTarget.value)
+    }
+
+    const keyDownDialogMessageHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter') {
+            addDialogHandler()
+        }
     }
 
     return (
@@ -48,12 +54,13 @@ export const DialogMessages = (props: DialogsMessagesPropsType) => {
                 <div className={st.blockInput}>
                     <textarea
                         placeholder="Write a message"
-                        value={props.dialogPage.newDialogText}
+                        value={props.dialogPageText}
                         onChange={newDialogMessageHandler}
+                        onKeyDown={keyDownDialogMessageHandler}
                     />
                 </div>
                 <div className={st.blockButton}>
-                    {<button onClick={addDialogHandler}>submit</button>}
+                    {props.dialogPageText !== '' && <button onClick={addDialogHandler}>submit</button>}
                 </div>
             </div>
         </div>
