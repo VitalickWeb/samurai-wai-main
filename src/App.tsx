@@ -13,10 +13,7 @@ import {News} from './components/news/News';
 import {Music} from './components/music/Music';
 import {Setting} from "./components/settings/Setting";
 import {BrowserRouter, Route} from 'react-router-dom';
-import {PostType} from "./components/profile/myPosts/post/Post";
-import {UsersType} from "./components/dialogs/dialogUsers/DialogUsers";
-import {DialogsMessagesType} from "./components/dialogs/dialogMessages/DialogMessages";
-import state, {addDialog, RootStateType} from "./redux/State";
+import {RootStateType} from "./redux/State";
 
 export type AppPropsType = {
     state: RootStateType
