@@ -2,6 +2,7 @@ import {PostType} from "../components/profile/myPosts/post/Post";
 import {UsersType} from "../components/dialogs/dialogUsers/DialogUsers";
 import {DialogsMessagesType} from "../components/dialogs/dialogMessages/DialogMessages";
 import {v1} from "uuid";
+import {ActionTypes} from "redux-form";
 
 
 export type ProfilePageType = {
@@ -24,13 +25,33 @@ export type RootStateType = {
 
 export type RootStoreType = {
     _state: RootStateType
-    addPost: (postMessage: string) => void
+    //addPost: (postMessage: string) => void
     addDialog: () => void
-    newPostTextMessage: (newPost: string) => void
+    // newPostTextMessage: (newPost: string) => void
     newDialogTextMessage: (newDialog: string) => void
-    _rerenderEntireTree: () => void
+    _callSubscriber: () => void
     subscriber: (observer: () => void) => void
     getState: () => RootStateType
+    dispatch: (action: ActionsTypes) => void
+}
+
+//Для всех возможных экшэнов создаем типы:
+export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof NewPostTextMessageAC>
+
+
+//Action creator это функция которая нам возвращает action - правильный объект, с указанным типом AddPostActionType
+export const addPostAC = (postMessage: string) => {
+    return {
+        type: 'ADD-POST',
+        postMessage: postMessage
+    } as const
+}
+
+export const NewPostTextMessageAC = (newPost: string) => {
+    return {
+        type: 'NEW-POST-TEXT-MESSAGE',
+        newPost: newPost
+    } as const
 }
 
 /**
@@ -38,6 +59,9 @@ export type RootStoreType = {
  * which is used as data storage.
  * !!!rerenderEntireTree, addPost, addDialog, newPostTextMessage, newDialogTextMessage, subscriber!!! - is now a methods of the store object
  */
+
+// пересмотреть 36 - 38 уроки
+
 let store: RootStoreType = {
     _state: {
         profilePage: {
@@ -80,19 +104,21 @@ let store: RootStoreType = {
         sidebar: {},
     },
 
-    _rerenderEntireTree() {
+    _callSubscriber() {
         console.log('state changed')
     },
-    addPost(postMessage: string) {
-        const newPost: PostType = {
-            id: v1(),
-            message: postMessage,
-            likeCounts: 0,
-        }
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = ''
-        this._rerenderEntireTree()
-    },
+
+    // addPost(postMessage: string) {
+    //     const newPost: PostType = {
+    //         id: v1(),
+    //         message: postMessage,
+    //         likeCounts: 0,
+    //     }
+    //     this._state.profilePage.posts.push(newPost);
+    //     this._state.profilePage.newPostText = ''
+    //     this._callSubscriber()
+    // },
+
     addDialog() {
         const newDialog: DialogsMessagesType = {
             id: v1(),
@@ -100,25 +126,55 @@ let store: RootStoreType = {
         }
         this._state.dialogPage.dataMessage.push(newDialog)
         this._state.dialogPage.newDialogText = ''
-        this._rerenderEntireTree()
+        this._callSubscriber()
     },
-    newPostTextMessage(newPost: string) {
-        this._state.profilePage.newPostText = newPost
-        this._rerenderEntireTree()
-    },
+
+    // newPostTextMessage(newPost: string) {
+    //     this._state.profilePage.newPostText = newPost
+    //     this._callSubscriber()
+    // },
+
+
     newDialogTextMessage(newDialog: string) {
         this._state.dialogPage.newDialogText = newDialog
-        this._rerenderEntireTree()
+        this._callSubscriber()
     },
     subscriber(observer) {//эту функцию вызывает файл который ее импортирует
         // функция subscriber ищет в родительском файле функцию rerenderEntireTree и присваивает ей колбэк observer
         //теперь rerenderEntireTree ссылается на ту функцию которая ей пришла в праметре - observer
         //тем временем в параметр observer ей пришла функция на которую ссылается rerenderEntireTree которая вызывает рендеринг
-        this._rerenderEntireTree = observer
+        this._callSubscriber = observer
     },
+    //к свойству или методу объекта обращаемся через this, для того что бы не зависеть от изменений с наружи
     getState() {
         return this._state
+    },
+
+    //В dispatch предаем объект action - диспатчим какой-то объект отправляя в store какой-то action - действие, которое
+    // описывает какое действие совершить. У него обязательно должно быть свойство type, которое будет текстовым. И
+    // в нем будет описано название действия, которое нужно совершить. Писать действие нужно в верхнем регистре пример - 'ADD-POST'.
+    //Мы должны спросить у action, если тип равен 'ADD-POST' то выполняем такое-то действие иначе если то другое действие и т.д.
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            const newPost: PostType = {
+                id: v1(),
+                message: action.postMessage,
+                likeCounts: 0,
+            }
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber()
+        } else if (action.type === 'NEW-POST-TEXT-MESSAGE') {
+            this._state.profilePage.newPostText = action.newPost//у объекта action теперь и тип и текст
+            this._callSubscriber()
+        }
     }
+    //В action с разным типом есть разный набор дополнительных свойств, потому что каждому action нужны свои доп. св-ва
+    //чтобы он мог выполнить ту или иную операцию
+    // Мы можем теперь заменить в store вызовы всех методов на один вызов dispatch
+
+    //У нас получается что метод Dispatch один, то есть наружу мы даем всего один метод Dispatch - одну кнопку, но что бы было понятно,
+    //человек который будет нажимать эту кнопку - то место где будут вызывать этот метод, должны передать туда еще объект
 }
 
 export default store;

@@ -13,14 +13,16 @@ import {News} from './components/news/News';
 import {Music} from './components/music/Music';
 import {Setting} from "./components/settings/Setting";
 import {BrowserRouter, Route} from 'react-router-dom';
-import {RootStateType} from "./redux/State";
+import {ActionsTypes, RootStateType} from "./redux/State";
 
 export type AppPropsType = {
+    message: string
     state: RootStateType
-    addPost: (postMessage: string) => void
-    newPostTextMessage: (newPost: string) => void
+    //addPost: (postMessage: string) => void
+    //newPostTextMessage: (newPost: string) => void
     addDialog: () => void
     newDialogTextMessage: (newDialog: string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -32,9 +34,10 @@ const App: React.FC<AppPropsType> = (props) => {
                 <div className="app-wrapper-content">
                     <Route path="/profile" render={() =>
                         <Profile
+                            message={props.message}
                             profilePage={props.state.profilePage}
-                            addPost={props.addPost}
-                            newPostTextMessage={props.newPostTextMessage}
+                            dispatch={props.dispatch}
+                            //dispatch={props.dispatch}
                         />}/>
                     <Route path="/dialogs" render={() =>
                         <Dialogs

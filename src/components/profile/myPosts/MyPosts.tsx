@@ -1,21 +1,24 @@
 import React, {ChangeEvent} from 'react';
 import st from "./MyPosts.module.css";
 import {Post} from "./post/Post";
-import {ProfilePageType} from "../../../redux/State";
+import {ActionsTypes, addPostAC, NewPostTextMessageAC, ProfilePageType} from "../../../redux/State";
 
-type MyPostsType = {
+export type MyPostsType = {
+    message: string
     profilePage: ProfilePageType
-    addPost: (postMessage: string) => void
-    newPostTextMessage: (dialogMessage: string) => void
+    dispatch: (action: ActionsTypes) => void
+    //addPost: (postMessage: string) => void
+    //newPostTextMessage: (dialogMessage: string) => void
 }
 
 export const MyPosts = (props: MyPostsType) => {
     const addPost = () => {
-        props.addPost(props.profilePage.newPostText)
+        props.dispatch(addPostAC(props.message))
     }
 
     const onChangePostValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.newPostTextMessage(e.currentTarget.value)
+        let action = NewPostTextMessageAC(e.currentTarget.value);
+        props.dispatch(action)
     }
 
     return (
