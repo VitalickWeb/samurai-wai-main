@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import st from "./DialogMessages.module.css";
-
+import {ActionsTypes, addDialogAC, addPostAC, newDialogTextMessageAC} from "../../../redux/State";
 
 export type DialogsMessagesType = {
     id: string
@@ -10,8 +10,9 @@ export type DialogsMessagesType = {
 type DialogsMessagesPropsType = {
     dialogPageText: string
     dialogsMessages: Array<DialogsMessagesType>
-    addDialog: () => void
-    newDialogTextMessage: (newDialog: string) => void
+    dispatch: (action: ActionsTypes) => void
+    //addDialog: () => void
+    //newDialogTextMessage: (newDialog: string) => void
 }
 
 export const DialogMessages = (props: DialogsMessagesPropsType) => {
@@ -32,11 +33,11 @@ export const DialogMessages = (props: DialogsMessagesPropsType) => {
     })
 
     const addDialogHandler = () => {
-        props.addDialog()
+        props.dispatch(addDialogAC(props.dialogPageText))
     }
 
     const newDialogMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.newDialogTextMessage(e.currentTarget.value)
+        props.dispatch(newDialogTextMessageAC(e.currentTarget.value))
     }
 
     const keyDownDialogMessageHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -64,6 +65,5 @@ export const DialogMessages = (props: DialogsMessagesPropsType) => {
                 </div>
             </div>
         </div>
-
     );
 }

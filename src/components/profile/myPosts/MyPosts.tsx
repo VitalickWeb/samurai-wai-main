@@ -7,8 +7,6 @@ export type MyPostsType = {
     message: string
     profilePage: ProfilePageType
     dispatch: (action: ActionsTypes) => void
-    //addPost: (postMessage: string) => void
-    //newPostTextMessage: (dialogMessage: string) => void
 }
 
 export const MyPosts = (props: MyPostsType) => {

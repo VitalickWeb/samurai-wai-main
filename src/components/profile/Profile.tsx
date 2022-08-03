@@ -7,8 +7,6 @@ type ProfileType = {
     message: string
     profilePage: ProfilePageType
     dispatch: (action: ActionsTypes) => void
-    //addPost: (postMessage: string) => void
-    //newPostTextMessage: (dialogMessage: string) => void
 }
 
 export const Profile: React.FC<ProfileType> = (props) => {
@@ -19,7 +17,6 @@ export const Profile: React.FC<ProfileType> = (props) => {
                 message={props.message}
                 profilePage={props.profilePage}
                 dispatch={props.dispatch}
-                // newPostTextMessage={props.newPostTextMessage}
             />
         </div>
     );

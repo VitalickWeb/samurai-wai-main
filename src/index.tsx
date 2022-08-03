@@ -15,9 +15,6 @@ const rerenderEntireTree = () => {
             //не вызвался от другого имени, нам нужно использовать метод bind() на эту же функцию в том хранилище, где
             //находится функция, в данном случае store
             dispatch={store.dispatch.bind(store)}
-            //newPostTextMessage={store.newPostTextMessage.bind(store)}
-            addDialog={store.addDialog.bind(store)}
-            newDialogTextMessage={store.newDialogTextMessage.bind(store)}
             state={store.getState()}
         />, document.getElementById('root')
     );

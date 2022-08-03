@@ -2,8 +2,6 @@ import {PostType} from "../components/profile/myPosts/post/Post";
 import {UsersType} from "../components/dialogs/dialogUsers/DialogUsers";
 import {DialogsMessagesType} from "../components/dialogs/dialogMessages/DialogMessages";
 import {v1} from "uuid";
-import {ActionTypes} from "redux-form";
-
 
 export type ProfilePageType = {
     posts: Array<PostType>
@@ -25,10 +23,6 @@ export type RootStateType = {
 
 export type RootStoreType = {
     _state: RootStateType
-    //addPost: (postMessage: string) => void
-    addDialog: () => void
-    // newPostTextMessage: (newPost: string) => void
-    newDialogTextMessage: (newDialog: string) => void
     _callSubscriber: () => void
     subscriber: (observer: () => void) => void
     getState: () => RootStateType
@@ -36,7 +30,10 @@ export type RootStoreType = {
 }
 
 //Для всех возможных экшэнов создаем типы:
-export type ActionsTypes = ReturnType<typeof addPostAC> | ReturnType<typeof NewPostTextMessageAC>
+export type ActionsTypes = ReturnType<typeof addPostAC>
+                        | ReturnType<typeof NewPostTextMessageAC>
+                        | ReturnType<typeof addDialogAC>
+                        | ReturnType<typeof newDialogTextMessageAC>
 
 
 //Action creator это функция которая нам возвращает action - правильный объект, с указанным типом AddPostActionType
@@ -51,6 +48,20 @@ export const NewPostTextMessageAC = (newPost: string) => {
     return {
         type: 'NEW-POST-TEXT-MESSAGE',
         newPost: newPost
+    } as const
+}
+
+export const addDialogAC = (newDialogText: string) => {
+    return {
+        type: 'ADD-DIALOG',
+        newDialog: newDialogText
+    } as const
+}
+
+export const newDialogTextMessageAC = (newDialog: string) => {
+    return {
+        type: 'NEW-DIALOG-TEXT-MESSAGE',
+        newDialog: newDialog
     } as const
 }
 
@@ -75,7 +86,7 @@ let store: RootStoreType = {
                 {id: v1(), message: 'Yo', likeCounts: 28},
                 {id: v1(), message: 'Last message', likeCounts: 15},
             ],
-            newPostText: '...',
+            newPostText: '',
         },
         dialogPage: {
             dataUsers: [
@@ -99,7 +110,7 @@ let store: RootStoreType = {
                 {id: v1(), message: 'Yo'},
                 {id: v1(), message: 'Last message'},
             ],
-            newDialogText: '...',
+            newDialogText: '',
         },
         sidebar: {},
     },
@@ -108,37 +119,7 @@ let store: RootStoreType = {
         console.log('state changed')
     },
 
-    // addPost(postMessage: string) {
-    //     const newPost: PostType = {
-    //         id: v1(),
-    //         message: postMessage,
-    //         likeCounts: 0,
-    //     }
-    //     this._state.profilePage.posts.push(newPost);
-    //     this._state.profilePage.newPostText = ''
-    //     this._callSubscriber()
-    // },
-
-    addDialog() {
-        const newDialog: DialogsMessagesType = {
-            id: v1(),
-            message: this._state.dialogPage.newDialogText,
-        }
-        this._state.dialogPage.dataMessage.push(newDialog)
-        this._state.dialogPage.newDialogText = ''
-        this._callSubscriber()
-    },
-
-    // newPostTextMessage(newPost: string) {
-    //     this._state.profilePage.newPostText = newPost
-    //     this._callSubscriber()
-    // },
-
-
-    newDialogTextMessage(newDialog: string) {
-        this._state.dialogPage.newDialogText = newDialog
-        this._callSubscriber()
-    },
+    //getState и subscriber не относятся к методам, которые меняют state
     subscriber(observer) {//эту функцию вызывает файл который ее импортирует
         // функция subscriber ищет в родительском файле функцию rerenderEntireTree и присваивает ей колбэк observer
         //теперь rerenderEntireTree ссылается на ту функцию которая ей пришла в праметре - observer
@@ -150,11 +131,17 @@ let store: RootStoreType = {
         return this._state
     },
 
+    /**
+     * reducer это чистая функция, которая принимает state и action, если нужно этот action применяет к этому state
+     * и возвращает новый state. Либо же возвращает state, который был до этого не изменен, который пришел в этот reducer,
+     * тоесть не изменяет его, если action не подошел
+     */
+
     //В dispatch предаем объект action - диспатчим какой-то объект отправляя в store какой-то action - действие, которое
     // описывает какое действие совершить. У него обязательно должно быть свойство type, которое будет текстовым. И
     // в нем будет описано название действия, которое нужно совершить. Писать действие нужно в верхнем регистре пример - 'ADD-POST'.
     //Мы должны спросить у action, если тип равен 'ADD-POST' то выполняем такое-то действие иначе если то другое действие и т.д.
-    dispatch(action) {
+    dispatch(action) {//action это объект у которого как минимум есть св-во type и именно action мы можем диспатчить в store!!!
         if (action.type === 'ADD-POST') {
             const newPost: PostType = {
                 id: v1(),
@@ -166,6 +153,17 @@ let store: RootStoreType = {
             this._callSubscriber()
         } else if (action.type === 'NEW-POST-TEXT-MESSAGE') {
             this._state.profilePage.newPostText = action.newPost//у объекта action теперь и тип и текст
+            this._callSubscriber()
+        } else if (action.type === 'ADD-DIALOG') {
+            const newDialog: DialogsMessagesType = {
+                id: v1(),
+                message: this._state.dialogPage.newDialogText,
+            }
+            this._state.dialogPage.dataMessage.push(newDialog)
+            this._state.dialogPage.newDialogText = ''
+            this._callSubscriber()
+        } else if (action.type === 'NEW-DIALOG-TEXT-MESSAGE') {
+            this._state.dialogPage.newDialogText = action.newDialog
             this._callSubscriber()
         }
     }

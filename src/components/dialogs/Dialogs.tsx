@@ -2,12 +2,11 @@ import React from "react";
 import st from './Dialogs.module.css';
 import {DialogUsers} from "./dialogUsers/DialogUsers";
 import {DialogMessages} from "./dialogMessages/DialogMessages";
-import {DialogPageType} from "../../redux/State";
+import {ActionsTypes, DialogPageType} from "../../redux/State";
 
 type RootDialogsPropsType = {
     dialogPage: DialogPageType
-    addDialog: () => void
-    newDialogTextMessage: (newDialog: string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
 export const Dialogs = (props: RootDialogsPropsType) => {
@@ -22,8 +21,7 @@ export const Dialogs = (props: RootDialogsPropsType) => {
                 <DialogMessages
                     dialogPageText={props.dialogPage.newDialogText}
                     dialogsMessages={props.dialogPage.dataMessage}
-                    addDialog={props.addDialog}
-                    newDialogTextMessage={props.newDialogTextMessage}
+                    dispatch={props.dispatch}
                 />
             </div>
         </div>
