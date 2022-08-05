@@ -2,8 +2,8 @@ import {PostType} from "../components/profile/myPosts/post/Post";
 import {UsersType} from "../components/dialogs/dialogUsers/DialogUsers";
 import {DialogsMessagesType} from "../components/dialogs/dialogMessages/DialogMessages";
 import {v1} from "uuid";
-import ProfileReducer from "./Profile-reducer";
-import DialogReducer from "./Dialog-reducer";
+import ProfileReducer, {addPostAC, NewPostTextMessageAC} from "./Profile-reducer";
+import DialogReducer, {addDialogAC, newDialogTextMessageAC} from "./Dialog-reducer";
 import SidebarReducer from "./Sidebar-reducer";
 
 export type ProfilePageType = {
@@ -37,36 +37,6 @@ export type ActionsTypes = ReturnType<typeof addPostAC>
                         | ReturnType<typeof NewPostTextMessageAC>
                         | ReturnType<typeof addDialogAC>
                         | ReturnType<typeof newDialogTextMessageAC>
-
-
-//Action creator это функция которая нам возвращает action - правильный объект, с указанным типом AddPostActionType
-export const addPostAC = (postMessage: string) => {
-    return {
-        type: 'ADD-POST',
-        postMessage: postMessage
-    } as const
-}
-
-export const NewPostTextMessageAC = (newPost: string) => {
-    return {
-        type: 'NEW-POST-TEXT-MESSAGE',
-        newPost: newPost
-    } as const
-}
-
-export const addDialogAC = (newDialogText: string) => {
-    return {
-        type: 'ADD-DIALOG',
-        newDialog: newDialogText
-    } as const
-}
-
-export const newDialogTextMessageAC = (newDialog: string) => {
-    return {
-        type: 'NEW-DIALOG-TEXT-MESSAGE',
-        newDialog: newDialog
-    } as const
-}
 
 /**
  * All functions and variables packed in one object of the store

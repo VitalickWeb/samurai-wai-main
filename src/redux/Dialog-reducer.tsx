@@ -20,4 +20,18 @@ const DialogReducer = (state: DialogPageType, action: ActionsTypes) => {
     }
 }
 
+export const addDialogAC = (newDialogText: string) => {
+    return {
+        type: 'ADD-DIALOG',
+        newDialog: newDialogText
+    } as const
+}
+
+export const newDialogTextMessageAC = (newDialog: string) => {
+    return {
+        type: 'NEW-DIALOG-TEXT-MESSAGE',
+        newDialog: newDialog
+    } as const
+}
+
 export default DialogReducer;

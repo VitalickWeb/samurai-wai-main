@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import st from "./DialogMessages.module.css";
-import {ActionsTypes, addDialogAC, addPostAC, newDialogTextMessageAC} from "../../../redux/State";
+import {ActionsTypes} from "../../../redux/State";
+import {addDialogAC, newDialogTextMessageAC} from "../../../redux/Dialog-reducer";
 
 export type DialogsMessagesType = {
     id: string
@@ -11,8 +12,6 @@ type DialogsMessagesPropsType = {
     dialogPageText: string
     dialogsMessages: Array<DialogsMessagesType>
     dispatch: (action: ActionsTypes) => void
-    //addDialog: () => void
-    //newDialogTextMessage: (newDialog: string) => void
 }
 
 export const DialogMessages = (props: DialogsMessagesPropsType) => {
