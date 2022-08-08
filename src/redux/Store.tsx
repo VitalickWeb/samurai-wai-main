@@ -123,7 +123,7 @@ let store: RootStoreType = {
         this._state.dialogPage = DialogReducer(this._state.dialogPage, action)
         this._state.sidebar = SidebarReducer(this._state.sidebar, action)
 
-        this._callSubscriber();
+        this._callSubscriber();//уведомляем подписчика и параметром передаем свой state
 
         //     if (action.type === 'ADD-POST') {
         //         const newPost: PostType = {

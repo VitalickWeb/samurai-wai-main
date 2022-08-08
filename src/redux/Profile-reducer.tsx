@@ -1,8 +1,22 @@
-import {ActionsTypes, ProfilePageType} from "./State";
+import {ActionsTypes, ProfilePageType} from "./Store";
 import {PostType} from "../components/profile/myPosts/post/Post";
 import {v1} from "uuid";
 
-export const ProfileReducer = (state: ProfilePageType, action: ActionsTypes) => {
+let initialState = {
+        posts: [
+            {id: v1(), message: 'Hello, how are you?', likeCounts: 4},
+            {id: v1(), message: 'Hi, i\'m fine', likeCounts: 6},
+            {id: v1(), message: 'and you?', likeCounts: 2},
+            {id: v1(), message: 'First message', likeCounts: 8},
+            {id: v1(), message: 'Second message', likeCounts: 7},
+            {id: v1(), message: 'Third message', likeCounts: 24},
+            {id: v1(), message: 'Yo', likeCounts: 28},
+            {id: v1(), message: 'Last message', likeCounts: 15},
+        ],
+        newPostText: '',
+    };
+
+export const ProfileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
         case 'ADD-POST':
             const newPost: PostType = {
@@ -22,7 +36,7 @@ export const ProfileReducer = (state: ProfilePageType, action: ActionsTypes) => 
     };
 };
 
-//Action creator это функция которая нам возвращает action - правильный объект, с указанным типом AddPostActionType
+//ActionCreator это функция которая нам возвращает action - правильный объект, с указанным типом AddPostActionType
 export const addPostAC = (postMessage: string) => {
     return {
         type: 'ADD-POST',

@@ -2,7 +2,7 @@ import React from "react";
 import st from './Dialogs.module.css';
 import {DialogUsers} from "./dialogUsers/DialogUsers";
 import {DialogMessages} from "./dialogMessages/DialogMessages";
-import {ActionsTypes, DialogPageType} from "../../redux/State";
+import {ActionsTypes, DialogPageType} from "../../redux/Store";
 
 type RootDialogsPropsType = {
     dialogPage: DialogPageType

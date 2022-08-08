@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent} from "react";
 import st from "./DialogMessages.module.css";
-import {ActionsTypes} from "../../../redux/State";
+import {ActionsTypes} from "../../../redux/Store";
 import {addDialogAC, newDialogTextMessageAC} from "../../../redux/Dialog-reducer";
 
 export type DialogsMessagesType = {

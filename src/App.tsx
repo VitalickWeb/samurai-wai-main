@@ -13,7 +13,7 @@ import {News} from './components/news/News';
 import {Music} from './components/music/Music';
 import {Setting} from "./components/settings/Setting";
 import {BrowserRouter, Route} from 'react-router-dom';
-import {ActionsTypes, RootStateType} from "./redux/State";
+import {ActionsTypes, RootStateType} from "./redux/Store";
 
 export type AppPropsType = {
     message: string
