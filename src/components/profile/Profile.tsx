@@ -3,8 +3,7 @@ import { ProfileInfo } from "./profileInfo/ProfileInfo";
 import { MyPosts } from "./myPosts/MyPosts";
 import {ActionsTypes, ProfilePageType} from "../../redux/Store";
 
-type ProfileType = {
-    message: string
+export type ProfileType = {
     profilePage: ProfilePageType
     dispatch: (action: ActionsTypes) => void
 }
@@ -14,8 +13,8 @@ export const Profile: React.FC<ProfileType> = (props) => {
         <div>
             <ProfileInfo/>
             <MyPosts
-                message={props.message}
-                profilePage={props.profilePage}
+                profileMessage={props.profilePage.posts}
+                profilePageText={props.profilePage.newPostText}
                 dispatch={props.dispatch}
             />
         </div>

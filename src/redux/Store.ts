@@ -1,10 +1,10 @@
-import {PostType} from "../components/profile/myPosts/post/Post";
 import {UsersType} from "../components/dialogs/dialogUsers/DialogUsers";
 import {DialogsMessagesType} from "../components/dialogs/dialogMessages/DialogMessages";
 import {v1} from "uuid";
 import ProfileReducer, {addPostAC, NewPostTextMessageAC} from "./Profile-reducer";
 import DialogReducer, {addDialogAC, newDialogTextMessageAC} from "./Dialog-reducer";
 import SidebarReducer from "./Sidebar-reducer";
+import {PostType} from "../components/profile/myPosts/MyPosts";
 
 export type ProfilePageType = {
     posts: Array<PostType>
@@ -44,9 +44,9 @@ export type ActionsTypes = ReturnType<typeof addPostAC>
  * !!!rerenderEntireTree, addPost, addDialog, newPostTextMessage, newDialogTextMessage, subscriber!!! - is now a methods of the store object
  */
 
-// пересмотреть 36 - 38 уроки
+// пересмотреть 34 - 38, 42 уроки
 
-let store: RootStoreType = {
+export let store: RootStoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -107,7 +107,7 @@ let store: RootStoreType = {
     /**
      * reducer это чистая функция, которая принимает state и action, если нужно этот action применяет к этому state
      * и возвращает новый state. Либо же возвращает state, который был до этого не изменен, который пришел в этот reducer,
-     * тоесть не изменяет его, если action не подошел
+     * то есть не изменяет его, если action не подошел
      */
 
     //В dispatch предаем объект action - диспатчим какой-то объект отправляя в store какой-то action - действие, которое
@@ -125,31 +125,6 @@ let store: RootStoreType = {
 
         this._callSubscriber();//уведомляем подписчика и параметром передаем свой state
 
-        //     if (action.type === 'ADD-POST') {
-        //         const newPost: PostType = {
-        //             id: v1(),
-        //             message: action.postMessage,
-        //             likeCounts: 0,
-        //         }
-        //         this._state.profilePage.posts.push(newPost);
-        //         this._state.profilePage.newPostText = ''
-        //         this._callSubscriber()
-        //     } else if (action.type === 'NEW-POST-TEXT-MESSAGE') {
-        //         this._state.profilePage.newPostText = action.newPost//у объекта action теперь и тип и текст
-        //         this._callSubscriber()
-        //     } else if (action.type === 'ADD-DIALOG') {
-        //         const newDialog: DialogsMessagesType = {
-        //             id: v1(),
-        //             message: this._state.dialogPage.newDialogText,
-        //         }
-        //         this._state.dialogPage.dataMessage.push(newDialog)
-        //         this._state.dialogPage.newDialogText = ''
-        //         this._callSubscriber()
-        //     } else if (action.type === 'NEW-DIALOG-TEXT-MESSAGE') {
-        //         this._state.dialogPage.newDialogText = action.newDialog
-        //         this._callSubscriber()
-        //     }
-        // }
         //В action с разным типом есть разный набор дополнительных свойств, потому что каждому action нужны свои доп. св-ва
         //чтобы он мог выполнить ту или иную операцию
         // Мы можем теперь заменить в store вызовы всех методов на один вызов dispatch

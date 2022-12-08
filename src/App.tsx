@@ -16,7 +16,6 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import {ActionsTypes, RootStateType} from "./redux/Store";
 
 export type AppPropsType = {
-    message: string
     state: RootStateType
     dispatch: (action: ActionsTypes) => void
 }
@@ -30,7 +29,6 @@ const App: React.FC<AppPropsType> = (props) => {
                 <div className="app-wrapper-content">
                     <Route path="/profile" render={() =>
                         <Profile
-                            message={props.message}
                             profilePage={props.state.profilePage}
                             dispatch={props.dispatch}
                         />}/>

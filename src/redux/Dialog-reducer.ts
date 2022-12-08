@@ -27,7 +27,7 @@ let initialState = {
     newDialogText: '',
 };
 
-const DialogReducer = (state: DialogPageType = initialState, action: ActionsTypes) => {
+const DialogReducer = (state: DialogPageType = initialState, action: ActionsTypes): DialogPageType => {
     switch (action.type) {
         case 'ADD-DIALOG':
             const newDialog: DialogsMessagesType = {
