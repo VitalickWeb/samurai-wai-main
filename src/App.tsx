@@ -14,6 +14,8 @@ import {Music} from './components/music/Music';
 import {Setting} from "./components/settings/Setting";
 import {BrowserRouter, Route} from 'react-router-dom';
 import {ActionsTypes, RootStateType} from "./redux/Store";
+import Friends from "./components/friends/Friends";
+import st from "./components/navigation/Navigation.module.css";
 
 export type AppPropsType = {
     state: RootStateType
@@ -25,7 +27,16 @@ const App: React.FC<AppPropsType> = (props) => {
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
-                <Navigation/>
+                <div>
+                    <Navigation/>
+                <div className={st.navBlock}>
+                    <Friends
+                        title="FRIENDS"
+                        usersFriends={props.state.sidebar.usersFriends}
+                        dispatch={props.dispatch}
+                    />
+                </div>
+                </div>
                 <div className="app-wrapper-content">
                     <Route path="/profile" render={() =>
                         <Profile

@@ -1,8 +1,8 @@
 import React, {ChangeEvent} from 'react';
 import st from "./MyPosts.module.css";
-import {ActionsTypes, ProfilePageType} from "../../../redux/Store";
+import {ActionsTypes} from "../../../redux/Store";
 import {Post} from "./post/Post";
-import {addPostAC, NewPostTextMessageAC} from "../../../redux/Profile-reducer";
+import {NewPostTextMessageAC} from "../../../redux/Profile-reducer";
 
 
 export type PostType = {
@@ -14,11 +14,9 @@ export type PostType = {
 export type PostPropsType = {
     profilePageText: string
     profileMessage: Array<PostType>
+    addPost: () => void
     dispatch: (action: ActionsTypes) => void
 }
-
-
-
 
 export const MyPosts = (props: PostPropsType) => {
 
@@ -34,9 +32,10 @@ export const MyPosts = (props: PostPropsType) => {
         );
     })
 
-    const addPost = () => {
-        let action = addPostAC(props.profilePageText)
-        props.dispatch(action)
+    const onAddPost = () => {
+        props.addPost()
+        // let action = addPostAC(props.profilePageText)
+        // props.dispatch(action)
     }
 
     const onChangePostValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -57,16 +56,12 @@ export const MyPosts = (props: PostPropsType) => {
                     />
                 </div>
                 <div className={st.buttonAddPost}>
-                    <button onClick={addPost}>add post</button>
+                    <button onClick={onAddPost}>add post</button>
                 </div>
             </div>
 
             <div className={st.message}>
                 {postsRender}
-                {/*<Post*/}
-                {/*    profilePageText={props.profileMessage.newPostText}*/}
-                {/*    profileMessage={props.profileMessage.posts}*/}
-                {/*/>*/}
             </div>
         </div>
     );

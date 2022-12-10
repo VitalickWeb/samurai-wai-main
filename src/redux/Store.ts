@@ -5,6 +5,7 @@ import ProfileReducer, {addPostAC, NewPostTextMessageAC} from "./Profile-reducer
 import DialogReducer, {addDialogAC, newDialogTextMessageAC} from "./Dialog-reducer";
 import SidebarReducer from "./Sidebar-reducer";
 import {PostType} from "../components/profile/myPosts/MyPosts";
+import {FriendType} from "../components/friends/Friends";
 
 export type ProfilePageType = {
     posts: Array<PostType>
@@ -16,7 +17,9 @@ export type DialogPageType = {
     newDialogText: string
 }
 
-export type SidebarType = {}
+export type SidebarType = {
+    usersFriends: Array<FriendType>
+}
 
 export type RootStateType = {
     profilePage: ProfilePageType
@@ -85,7 +88,16 @@ export let store: RootStoreType = {
             ],
             newDialogText: '',
         },
-        sidebar: {},
+        sidebar: {
+            usersFriends: [
+                {id: v1(), name: "Vitaliy"},
+                {id: v1(), name: "Natasha"},
+                {id: v1(), name: "Mark"},
+                {id: v1(), name: "Oleg"},
+                {id: v1(), name: "Alexandra"},
+                {id: v1(), name: "Sasha"},
+            ]
+        },
     },
 
     _callSubscriber() {

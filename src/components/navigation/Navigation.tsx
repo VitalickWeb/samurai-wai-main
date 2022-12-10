@@ -23,6 +23,7 @@ export const Navigation = () => {
                     <NavLink to="/settings" activeClassName={st.active}>Settings</NavLink>
                 </div>
             </div>
+
         </nav>
     );
 }

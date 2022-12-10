@@ -3,14 +3,12 @@
     grid-area: n;
     display: flex;
     justify-content: center;
-
 }
 
 .navItem {
     line-height: 52px;
     margin-top: 20px;
 }
-
 
 .navItem a {
     text-decoration: none;
