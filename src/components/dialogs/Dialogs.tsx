@@ -2,8 +2,6 @@ import React, {ChangeEvent, KeyboardEvent} from "react";
 import st from './Dialogs.module.css';
 import {DialogUsers} from "./dialogUsers/DialogUsers";
 import {DialogMessages} from "./dialogMessages/DialogMessages";
-import {ActionsTypes, DialogPageType} from "../../redux/Store";
-import {addDialogAC, newDialogTextMessageAC} from "../../redux/Dialog-reducer";
 
 export type UsersType = {
     id: string
@@ -16,13 +14,17 @@ export type DialogsMessagesType = {
 }
 
 type RootDialogsPropsType = {
-    dialogPage: DialogPageType
-    dispatch: (action: ActionsTypes) => void
+    newDialogText: string
+    dataUsers: Array<UsersType>
+    dataMessage: Array<DialogsMessagesType>
+    addDialog: () => void
+    newDialogMessage: (text: string) => void
 }
 
 export const Dialogs = (props: RootDialogsPropsType) => {
 
-    const renderUsers = props.dialogPage.dataUsers.map(du => {
+
+    const renderUsers = props.dataUsers.map(du => {
         return (
             <div key={du.id}>
                 <DialogUsers id={du.id} dialog={du.dialog}/>
@@ -30,7 +32,7 @@ export const Dialogs = (props: RootDialogsPropsType) => {
         );
     })
 
-    const renderMessages = props.dialogPage.dataMessage.map(dm => {
+    const renderMessages = props.dataMessage.map(dm => {
         return (
             <div className={st.blockItem} key={dm.id}>
                 <DialogMessages id={dm.id} message={dm.message}/>
@@ -39,11 +41,12 @@ export const Dialogs = (props: RootDialogsPropsType) => {
     })
 
     const addDialogHandler = () => {
-        props.dispatch(addDialogAC(props.dialogPage.newDialogText))
+        props.addDialog()
     }
 
     const newDialogMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(newDialogTextMessageAC(e.currentTarget.value))
+        let newPost = e.currentTarget.value
+        props.newDialogMessage(newPost)
     }
 
     const keyDownDialogMessageHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -62,13 +65,13 @@ export const Dialogs = (props: RootDialogsPropsType) => {
                     <div className={st.blockInput}>
                         <textarea
                             placeholder="Write a message"
-                            value={props.dialogPage.newDialogText}
+                            value={props.newDialogText}
                             onChange={newDialogMessageHandler}
                             onKeyDown={keyDownDialogMessageHandler}
                         />
                     </div>
                     <div className={st.blockButton}>
-                        {props.dialogPage.newDialogText !== '' && <button onClick={addDialogHandler}>submit</button>}
+                        {props.newDialogText !== '' && <button onClick={addDialogHandler}>submit</button>}
                     </div>
                 </div>
             </div>

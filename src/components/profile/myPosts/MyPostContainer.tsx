@@ -1,11 +1,11 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 
 //Контейнерная компонента, которая через себя передает в store
 //все что не может передавать презентационная компонента. Так же имеет право быть
 //не чистой, не тупой, разрешено знать о системе и инфраструктуре приложения, о запросах
 //и хранении данных. Предназначена она для того чтобы удовлетворить нужды презентационной
 //компоненты
-import {ActionsTypes} from "../../../redux/Store";
+import {ActionsTypes, RootStateType} from "../../../redux/Store";
 import {addPostAC, NewPostTextMessageAC} from "../../../redux/Profile-reducer";
 import {MyPosts} from "./MyPosts";
 
@@ -16,20 +16,20 @@ export type PostType = {
 }
 
 export type PostPropsType = {
-    profilePageText: string
-    profileMessage: Array<PostType>
+    state: RootStateType
     dispatch: (action: ActionsTypes) => void
 }
 
 export const MyPostsContainer = (props: PostPropsType) => {
+    let state = props.state
 
     const addPost = () => {
-        let action = addPostAC(props.profilePageText)
+        let action = addPostAC(state.profilePage.newPostText)
         props.dispatch(action)
     }
 
-    const onChangePostValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let action = NewPostTextMessageAC(e.currentTarget.value);
+    const onChangePostValue = (text: string) => {
+        let action = NewPostTextMessageAC(text);
         props.dispatch(action)
     }
 
@@ -37,9 +37,9 @@ export const MyPostsContainer = (props: PostPropsType) => {
         <div>
             <MyPosts
                 addPost={addPost}
-                profilePageText={props.profilePageText}
-                profileMessage={props.profileMessage}
-                dispatch={props.dispatch}
+                changePostValue={onChangePostValue}
+                profileMessage={state.profilePage.posts}
+                profilePageText={state.profilePage.newPostText}
             />
         </div>
     );

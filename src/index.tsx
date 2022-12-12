@@ -2,9 +2,13 @@ import React from 'react';
 import './index.css';
 import ReactDOM from 'react-dom';
 import App from './App';
-import store from "./redux/Redux-store";
+import store from "./redux/Redux-store"; //импортируем Store из redux-store.ts
 import {RootStateType} from "./redux/Store";
 
+// export type RootStateStoreType = {
+//     store: RootStoreType
+//     state: RootStateType
+// }
 
 const rerenderEntireTree = (state: RootStateType) => {//вызываем функцию rerenderEntireTree при каждой перерисовке
     ReactDOM.render(
@@ -14,7 +18,7 @@ const rerenderEntireTree = (state: RootStateType) => {//вызываем фун�
             //не вызвался от другого имени, нам нужно использовать метод bind() на эту же функцию в том хранилище, где
             //находится функция, в данном случае store
             dispatch={store.dispatch.bind(store)}
-            state={store.getState()}
+            state={state}
 
         />, document.getElementById('root')
     );
