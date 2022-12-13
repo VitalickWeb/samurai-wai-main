@@ -18,6 +18,7 @@ export type DialogPageType = {
 }
 
 export type SidebarType = {
+    title: string
     usersFriends: Array<FriendType>
 }
 
@@ -89,6 +90,7 @@ export let store: RootStoreType = {
             newDialogText: '',
         },
         sidebar: {
+            title: "FRIENDS",
             usersFriends: [
                 {id: v1(), name: "Vitaliy"},
                 {id: v1(), name: "Natasha"},

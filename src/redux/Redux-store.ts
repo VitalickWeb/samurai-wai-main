@@ -9,10 +9,11 @@ let reducers = combineReducers({//объединяем три reducers. Чере
     sidebar: SidebarReducer//все это мы отдаем store
 });
 
-let store = legacy_createStore(reducers);//создаем store с помощью функции legacy_createStore
+export let store = legacy_createStore(reducers);//создаем store с помощью функции legacy_createStore
 //которому нужны редьюсеры, чтобы преобразовывать работы со state через специальную функцию combineReducers
 //после того как закомбайним редьюсеры мы отдаем переменную reducers стору
-export default store;
+
+export type ReduxRootStoreType = typeof store
 
 //Автоматически legacy_createStore создает внутри себя state у которого есть свойства положенные в combineReducers
 //только теперь они передаются без значений. И поэтому будет возвращать undefined во время инициализации state

@@ -2,10 +2,11 @@ import React from 'react';
 import './index.css';
 import ReactDOM from 'react-dom';
 import App from './App';
-import store from "./redux/Redux-store"; //импортируем Store из redux-store.ts
-import {RootStateType} from "./redux/Store";
 import {Provider} from "./StoreContext";
 import {BrowserRouter} from "react-router-dom";
+import {store} from "./redux/Redux-store";//импортируем Store из redux-store.ts
+import {RootStateType} from "./redux/Store";
+
 
 
 export const rerenderEntireTree = (state: RootStateType) => {//вызываем функцию rerenderEntireTree при каждой перерисовке
@@ -25,20 +26,6 @@ export const rerenderEntireTree = (state: RootStateType) => {//вызываем 
         </BrowserRouter>,
         document.getElementById('root')
     );
-}
-export type PostType = {
-    id: string
-    message: string
-    likeCounts: number
-}
-export type UsersType = {
-    id: string
-    dialog: string
-}
-
-export type DialogsMessagesType = {
-    id: string
-    message: string
 }
 
 rerenderEntireTree(store.getState())//когда мы узнаем что стэйт изменился, нам нужно у стора запросить этот стэйт заново

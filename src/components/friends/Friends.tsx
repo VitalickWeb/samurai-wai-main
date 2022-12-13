@@ -11,12 +11,10 @@ export type FriendType = {
 export type FriendsPropsType = {
     title: string
     usersFriends: Array<FriendType>
-    dispatch: (action: ActionsTypes) => void
 }
-const Friends = ({title, usersFriends, dispatch}: FriendsPropsType) => {
+export const Friends = ({title, usersFriends}: FriendsPropsType) => {
 
     let renderFriends = usersFriends.map(u => {
-        console.log(u.name)
         return (
             <div key={u.id}>
                 <MyFriends
@@ -37,5 +35,3 @@ const Friends = ({title, usersFriends, dispatch}: FriendsPropsType) => {
         </div>
     );
 };
-
-export default Friends;

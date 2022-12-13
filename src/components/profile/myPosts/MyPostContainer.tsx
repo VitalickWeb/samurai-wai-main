@@ -5,32 +5,26 @@ import React from "react";
 //не чистой, не тупой, разрешено знать о системе и инфраструктуре приложения, о запросах
 //и хранении данных. Предназначена она для того чтобы удовлетворить нужды презентационной
 //компоненты
-import {RootStoreType} from "../../../redux/Store";
 import {MyPosts} from "./MyPosts";
 import {addPostAC, NewPostTextMessageAC} from "../../../redux/Profile-reducer";
 import StoreContext from "../../../StoreContext"
+import {ReduxRootStoreType} from "../../../redux/Redux-store";
 
-
-export type DialogContainerType = {
-    store: RootStoreType
-}
-
-export const MyPostsContainer = (props: DialogContainerType) => {
-
+export const MyPostsContainer = () => {
     return (
         <StoreContext.Consumer>
             {
-                (store: RootStoreType) => {
-                    let state = props.store.getState().profilePage
+                (store: ReduxRootStoreType) => {
+                    let state = store.getState().profilePage
 
                     const addPost = () => {
                         let action = addPostAC(state.newPostText)
-                        props.store.dispatch(action)
+                        store.dispatch(action)
                     }
 
                     const onChangePostValue = (text: string) => {
                         let action = NewPostTextMessageAC(text);
-                        props.store.dispatch(action)
+                        store.dispatch(action)
                     }
                     return (
                         <MyPosts

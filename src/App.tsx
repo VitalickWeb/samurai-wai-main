@@ -12,30 +12,23 @@ import {News} from './components/news/News';
 import {Music} from './components/music/Music';
 import {Setting} from "./components/settings/Setting";
 import {Route} from 'react-router-dom';
-import Friends from "./components/friends/Friends";
 import st from "./components/navigation/Navigation.module.css";
 import {DialogsContainer} from "./components/dialogs/DialogsContainer";
-import {RootStoreType} from "./redux/Store";
+import {FriendsContainer} from "./components/friends/FriendsContainer";
 
 // export type AppPropsType = {
 //     state: RootStateType
 //     dispatch: (action: ActionsTypes) => void
 // }
 
-export type ConsumerType = {
-    store: RootStoreType
-}
-
-const App: React.FC<ConsumerType> = (props) => {
+const App = () => {
     return (
-
             <div className="app-wrapper">
                 <Header/>
                 <div>
                     <Navigation/>
                 <div className={st.navBlock}>
-                    <Friends
-                        title="FRIENDS"
+                    <FriendsContainer
                         // usersFriends={props.state.sidebar.usersFriends}
                         // dispatch={props.dispatch}
                     />
@@ -44,13 +37,11 @@ const App: React.FC<ConsumerType> = (props) => {
                 <div className="app-wrapper-content">
                     <Route path="/profile" render={() =>
                         <Profile
-                            store={props.store}
                             // state={props.state}
                             // dispatch={props.dispatch}
                         />}/>
                     <Route path="/dialogs" render={() =>
                         <DialogsContainer
-                            store={props.store}
                             // state={props.state}
                             // dispatch={props.dispatch}
                         />}/>
@@ -59,7 +50,6 @@ const App: React.FC<ConsumerType> = (props) => {
                     <Route path="/settings" render={() => <Setting/>}/>
                 </div>
             </div>
-
     );
 }
 
