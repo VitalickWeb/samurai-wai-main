@@ -4,25 +4,43 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import store from "./redux/Redux-store"; //импортируем Store из redux-store.ts
 import {RootStateType} from "./redux/Store";
+import {Provider} from "./StoreContext";
+import {BrowserRouter} from "react-router-dom";
 
-// export type RootStateStoreType = {
-//     store: RootStoreType
-//     state: RootStateType
-// }
 
-const rerenderEntireTree = (state: RootStateType) => {//вызываем функцию rerenderEntireTree при каждой перерисовке
+export const rerenderEntireTree = (state: RootStateType) => {//вызываем функцию rerenderEntireTree при каждой перерисовке
     ReactDOM.render(
-        <App
-            //если внутри функции addPost например, которая является методом объекта и внутри этого метода используется this
-            //значит обязательно, если мы этот метод передаем как callback, нужно позаботится о том чтобы этот this
-            //не вызвался от другого имени, нам нужно использовать метод bind() на эту же функцию в том хранилище, где
-            //находится функция, в данном случае store
-            dispatch={store.dispatch.bind(store)}
-            state={state}
-
-        />, document.getElementById('root')
+        //все дочерние components обрамляем в StoreContext для того что бы всем дочерних компонентам был доступен Store
+        <BrowserRouter>
+            <Provider store={store}>
+                <App
+                    //если внутри функции addPost например, которая является методом объекта и внутри этого метода используется this
+                    //значит обязательно, если мы этот метод передаем как callback, нужно позаботится о том чтобы этот this
+                    //не вызвался от другого имени, нам нужно использовать метод bind() на эту же функцию в том хранилище, где
+                    //находится функция, в данном случае store
+                    // dispatch={store.dispatch.bind(store)}
+                    // state={state}
+                />
+            </Provider>,
+        </BrowserRouter>,
+        document.getElementById('root')
     );
 }
+export type PostType = {
+    id: string
+    message: string
+    likeCounts: number
+}
+export type UsersType = {
+    id: string
+    dialog: string
+}
+
+export type DialogsMessagesType = {
+    id: string
+    message: string
+}
+
 rerenderEntireTree(store.getState())//когда мы узнаем что стэйт изменился, нам нужно у стора запросить этот стэйт заново
 store.subscribe(() => {
     let state = store.getState()

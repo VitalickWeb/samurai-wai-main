@@ -105,7 +105,7 @@ export let store: RootStoreType = {
     },
 
     //getState и subscriber не относятся к методам, которые меняют state
-    subscriber(observer) {//эту функцию вызывает файл который ее импортирует
+    subscriber(observer ) {//эту функцию вызывает файл который ее импортирует
         // функция subscriber ищет в родительском файле функцию rerenderEntireTree и присваивает ей колбэк observer
         //теперь rerenderEntireTree ссылается на ту функцию которая ей пришла в праметре - observer
         //тем временем в параметр observer ей пришла функция на которую ссылается rerenderEntireTree которая вызывает рендеринг

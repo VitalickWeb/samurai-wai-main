@@ -1,11 +1,10 @@
 import React from 'react';
 import {ProfileInfo} from "./profileInfo/ProfileInfo";
-import {ActionsTypes, RootStateType} from "../../redux/Store";
+import {RootStoreType} from "../../redux/Store";
 import {MyPostsContainer} from "./myPosts/MyPostContainer";
 
 export type ProfileType = {
-    state: RootStateType
-    dispatch: (action: ActionsTypes) => void
+  store: RootStoreType
 }
 
 export const Profile: React.FC<ProfileType> = (props) => {
@@ -13,8 +12,7 @@ export const Profile: React.FC<ProfileType> = (props) => {
         <div>
             <ProfileInfo/>
             <MyPostsContainer
-                state={props.state}
-                dispatch={props.dispatch}
+                store={props.store}
             />
         </div>
     );

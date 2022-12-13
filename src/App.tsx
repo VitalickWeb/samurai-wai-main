@@ -11,20 +11,24 @@ import {Profile} from './components/profile/Profile';
 import {News} from './components/news/News';
 import {Music} from './components/music/Music';
 import {Setting} from "./components/settings/Setting";
-import {BrowserRouter, Route} from 'react-router-dom';
-import {ActionsTypes, RootStateType} from "./redux/Store";
+import {Route} from 'react-router-dom';
 import Friends from "./components/friends/Friends";
 import st from "./components/navigation/Navigation.module.css";
 import {DialogsContainer} from "./components/dialogs/DialogsContainer";
+import {RootStoreType} from "./redux/Store";
 
-export type AppPropsType = {
-    state: RootStateType
-    dispatch: (action: ActionsTypes) => void
+// export type AppPropsType = {
+//     state: RootStateType
+//     dispatch: (action: ActionsTypes) => void
+// }
+
+export type ConsumerType = {
+    store: RootStoreType
 }
 
-const App: React.FC<AppPropsType> = (props) => {
+const App: React.FC<ConsumerType> = (props) => {
     return (
-        <BrowserRouter>
+
             <div className="app-wrapper">
                 <Header/>
                 <div>
@@ -32,28 +36,30 @@ const App: React.FC<AppPropsType> = (props) => {
                 <div className={st.navBlock}>
                     <Friends
                         title="FRIENDS"
-                        usersFriends={props.state.sidebar.usersFriends}
-                        dispatch={props.dispatch}
+                        // usersFriends={props.state.sidebar.usersFriends}
+                        // dispatch={props.dispatch}
                     />
                 </div>
                 </div>
                 <div className="app-wrapper-content">
                     <Route path="/profile" render={() =>
                         <Profile
-                            state={props.state}
-                            dispatch={props.dispatch}
+                            store={props.store}
+                            // state={props.state}
+                            // dispatch={props.dispatch}
                         />}/>
                     <Route path="/dialogs" render={() =>
                         <DialogsContainer
-                            state={props.state}
-                            dispatch={props.dispatch}
+                            store={props.store}
+                            // state={props.state}
+                            // dispatch={props.dispatch}
                         />}/>
                     <Route path="/news" render={() => <News/>}/>
                     <Route path="/music" render={() => <Music/>}/>
                     <Route path="/settings" render={() => <Setting/>}/>
                 </div>
             </div>
-        </BrowserRouter>
+
     );
 }
 
