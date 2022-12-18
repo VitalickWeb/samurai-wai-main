@@ -1,5 +1,6 @@
-import {ActionsTypes, SidebarType} from "./Store";
 import {v1} from "uuid";
+import {ActionsTypes} from "./Store";
+import {FriendType} from "../components/friends/FriendsContainer";
 
 let initialState = {
     title: "FRIENDS",
@@ -10,12 +11,17 @@ let initialState = {
         {id: v1(), name: "Oleg"},
         {id: v1(), name: "Alexandra"},
         {id: v1(), name: "Sasha"},
-    ]
+    ] as Array<FriendType>
 }
 
-export const SidebarReducer = (state: SidebarType = initialState, action: ActionsTypes): SidebarType => {
+export type SidebarType = typeof initialState
 
+export const SidebarReducer = (state: SidebarType = initialState, action: ActionsTypes): SidebarType => {
+    switch (action.type) {
+
+    }
     return state
 }
 
 export default SidebarReducer;
+

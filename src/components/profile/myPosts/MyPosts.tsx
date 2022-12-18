@@ -1,25 +1,12 @@
 import React, {ChangeEvent} from 'react';
 import st from "./MyPosts.module.css";
 import {Post} from "./post/Post";
+import {PostPropsTypes} from "./MyPostContainer";
 
 
-export type PostType = {
-    id: string
-    message: string
-    likeCounts: number
-}
-
-export type PostPropsType = {
-    profilePageText: string
-    profileMessage: Array<PostType>
-    addPost: () => void
-    changePostValue: (text: string) => void
-}
-
-export const MyPosts = (props: PostPropsType) => {
+export const MyPosts = (props: PostPropsTypes) => {
 
     const postsRender = props.profileMessage.map(p => {
-
         return (
             <div key={p.id}>
                 <Post
@@ -31,7 +18,7 @@ export const MyPosts = (props: PostPropsType) => {
     })
 
     const onAddPost = () => {
-        props.addPost()
+        props.addPost(props.profilePageText)
     }
 
     const onChangePostValue = (e: ChangeEvent<HTMLTextAreaElement>) => {

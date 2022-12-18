@@ -16,34 +16,26 @@ import st from "./components/navigation/Navigation.module.css";
 import {DialogsContainer} from "./components/dialogs/DialogsContainer";
 import {FriendsContainer} from "./components/friends/FriendsContainer";
 
-// export type AppPropsType = {
-//     state: RootStateType
-//     dispatch: (action: ActionsTypes) => void
-// }
-
 const App = () => {
     return (
             <div className="app-wrapper">
                 <Header/>
                 <div>
                     <Navigation/>
-                <div className={st.navBlock}>
-                    <FriendsContainer
-                        // usersFriends={props.state.sidebar.usersFriends}
-                        // dispatch={props.dispatch}
-                    />
-                </div>
+                    <div className={st.navBlock}>
+                        <FriendsContainer
+
+                        />
+                    </div>
                 </div>
                 <div className="app-wrapper-content">
                     <Route path="/profile" render={() =>
                         <Profile
-                            // state={props.state}
-                            // dispatch={props.dispatch}
+
                         />}/>
                     <Route path="/dialogs" render={() =>
                         <DialogsContainer
-                            // state={props.state}
-                            // dispatch={props.dispatch}
+
                         />}/>
                     <Route path="/news" render={() => <News/>}/>
                     <Route path="/music" render={() => <Music/>}/>

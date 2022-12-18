@@ -1,8 +1,13 @@
 import {v1} from "uuid";
 import {DialogsMessagesType} from "../components/dialogs/dialogMessages/DialogMessages";
-import {ActionsTypes, DialogPageType} from "./Store";
+import {UsersType} from "../components/dialogs/dialogUsers/DialogUsers";
 
-let initialState = {
+export type addDialogAT = ReturnType<typeof addDialogAC>
+export type newDialogTextMessageAT = ReturnType<typeof newDialogTextMessageAC>
+
+export type ActionTypes = addDialogAT | newDialogTextMessageAT
+
+const initialState = {
     dataUsers: [
         {id: v1(), dialog: 'Vitaliy'},
         {id: v1(), dialog: 'Vera'},
@@ -12,8 +17,7 @@ let initialState = {
         {id: v1(), dialog: 'Natasha'},
         {id: v1(), dialog: 'Dmitriy'},
         {id: v1(), dialog: 'Yaroslav'},
-    ],
-
+    ] as  Array<UsersType>,
     dataMessage: [
         {id: v1(), message: 'Hello, how are you?'},
         {id: v1(), message: 'Hi, i\'m fine'},
@@ -23,11 +27,13 @@ let initialState = {
         {id: v1(), message: 'Third message'},
         {id: v1(), message: 'Yo'},
         {id: v1(), message: 'Last message'},
-    ],
+    ] as Array<DialogsMessagesType>,
     newDialogText: '',
 };
 
-const DialogReducer = (state: DialogPageType = initialState, action: ActionsTypes): DialogPageType => {
+export type InitialDialogPageType = typeof initialState
+
+const DialogReducer = (state: InitialDialogPageType = initialState, action: ActionTypes): InitialDialogPageType => {
     switch (action.type) {
         case 'ADD-DIALOG':
             const newDialog: DialogsMessagesType = {

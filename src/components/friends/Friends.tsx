@@ -1,20 +1,12 @@
 import React from 'react';
 import st from "./Friends.module.css";
-import {ActionsTypes} from "../../redux/Store";
 import MyFriends from "./MyFriends/MyFriends";
+import {FriendPropsTypes} from "./FriendsContainer";
 
-export type FriendType = {
-    id: string
-    name: string
-}
 
-export type FriendsPropsType = {
-    title: string
-    usersFriends: Array<FriendType>
-}
-export const Friends = ({title, usersFriends}: FriendsPropsType) => {
+export const Friends = (props: FriendPropsTypes) => {
 
-    let renderFriends = usersFriends.map(u => {
+    let renderFriends = props.usersFriends.map(u => {
         return (
             <div key={u.id}>
                 <MyFriends
@@ -27,7 +19,7 @@ export const Friends = ({title, usersFriends}: FriendsPropsType) => {
     return (
         <div>
             <div className={st.blockFriends}>
-                <h3 className={st.titleFriends}>{title}</h3>
+                <h3 className={st.titleFriends}>{props.title}</h3>
             </div>
             <div className={st.imgFriends}>
                 {renderFriends}

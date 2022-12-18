@@ -1,23 +1,22 @@
 import {UsersType} from "../components/dialogs/dialogUsers/DialogUsers";
 import {DialogsMessagesType} from "../components/dialogs/dialogMessages/DialogMessages";
 import {v1} from "uuid";
-import ProfileReducer, {addPostAC, NewPostTextMessageAC} from "./Profile-reducer";
-import DialogReducer, {addDialogAC, newDialogTextMessageAC} from "./Dialog-reducer";
-import SidebarReducer from "./Sidebar-reducer";
-import {PostType} from "../components/profile/myPosts/MyPosts";
-import {FriendType} from "../components/friends/Friends";
+import {addPostAC, NewPostTextMessageAC} from "./Profile-reducer";
+import {addDialogAC, newDialogTextMessageAC} from "./Dialog-reducer";
+import {PostType} from "../components/profile/myPosts/MyPostContainer";
+import {FriendType} from "../components/friends/FriendsContainer";
 
-export type ProfilePageType = {
+type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
 }
-export type DialogPageType = {
+type DialogPageType = {
     dataUsers: Array<UsersType>
     dataMessage: Array<DialogsMessagesType>
     newDialogText: string
 }
 
-export type SidebarType = {
+type SidebarType = {
     title: string
     usersFriends: Array<FriendType>
 }
@@ -130,12 +129,16 @@ export let store: RootStoreType = {
     //Мы должны спросить у action, если тип равен 'ADD-POST' то выполняем такое-то действие иначе если то другое действие и т.д.
     dispatch(action) {//action это объект у которого как минимум есть св-во type и именно action мы можем диспатчить в store!!!
         //делегировали преобразование веток стэйта редьюсером и уведомили подписчика
-        this._state.profilePage = ProfileReducer(this._state.profilePage, action) //нужно вызвать этот reducer и отдать туда часть state, который является profile
+
+        // нужно вызвать этот reducer и отдать туда часть state, который является profile
+        // this._state.profilePage = ProfileReducer(this._state.profilePage, action)
+
         //и адресован именно этому reducer, action который приходит в dispatch передаем так же.
         //reducer возвращает измененную под часть стэйта
         //this._state.profilePage присвоив сюда reducer обновили state
-        this._state.dialogPage = DialogReducer(this._state.dialogPage, action)
-        this._state.sidebar = SidebarReducer(this._state.sidebar, action)
+        // this._state.dialogPage = DialogReducer(this._state.dialogPage, action)
+
+        // this._state.sidebar = SidebarReducer(this._state.sidebar, action)
 
         this._callSubscriber();//уведомляем подписчика и параметром передаем свой state
 

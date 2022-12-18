@@ -1,6 +1,11 @@
-import {ActionsTypes, ProfilePageType} from "./Store";
 import {v1} from "uuid";
-import {PostType} from "../components/profile/myPosts/MyPosts";
+import {PostType} from "../components/profile/myPosts/MyPostContainer";
+
+
+export type addPostAT = ReturnType<typeof addPostAC>
+export type NewPostTextMessageAT = ReturnType<typeof NewPostTextMessageAC>
+
+export type ActionTypes = addPostAT | NewPostTextMessageAT
 
 let initialState = {
         posts: [
@@ -12,11 +17,15 @@ let initialState = {
             {id: v1(), message: 'Third message', likeCounts: 24},
             {id: v1(), message: 'Yo', likeCounts: 28},
             {id: v1(), message: 'Last message', likeCounts: 15},
-        ],
+        ] as Array<PostType>,
         newPostText: '',
     };
 
-export const ProfileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
+export type InitialProfilePageType = typeof initialState
+
+export const ProfileReducer = (state: InitialProfilePageType = initialState, action: ActionTypes): InitialProfilePageType => {
+   console.log(state)
+   console.log(action)
     switch (action.type) {
         case 'ADD-POST':
             const newPost: PostType = {
@@ -24,12 +33,14 @@ export const ProfileReducer = (state: ProfilePageType = initialState, action: Ac
                 message: action.postMessage,
                 likeCounts: 0,
             };
-            state.posts.push(newPost);//state здесь будет в место profilePage
-            state.newPostText = ''//и здесь тоже
-            //вместо callSubscriber() преобразователя, преобразования будут делать state и action в параметрах функции
+            return {...state,
+                state.posts.push(newPost),//state здесь будет в место profilePage
+                state.newPostText = ''//и здесь тоже
+            } //вместо callSubscriber() преобразователя, преобразования будут делать state и action в параметрах функции
             return state;//в место инструкции break используем return так как return не даст провалиться кейсу
-        case 'NEW-POST-TEXT-MESSAGE':
+        case 'NEW-POST-TEXT-MESSAGE': {
             state.newPostText = action.newPost//у объекта action теперь и тип и текст
+        }
             return state;
         default://если придет в ProfileReducer action тип которого не будет в параметрах, то вернем state по умолчанию
             return state;

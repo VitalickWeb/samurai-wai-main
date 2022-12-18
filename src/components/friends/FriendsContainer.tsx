@@ -1,35 +1,32 @@
 import React from 'react';
+import {AppRootStateType} from "../../redux/Redux-store";
+import {connect} from "react-redux";
 import {Friends} from "./Friends";
-import StoreContext from "../../StoreContext";
-import {ReduxRootStoreType} from "../../redux/Redux-store";
+
 
 export type FriendType = {
     id: string
     name: string
 }
 
-// export type FriendsPropsType = {
-//     title: string
-//     usersFriends: Array<FriendType>
-//     dispatch: (action: ActionsTypes) => void
-// }
+export type MapStateToProps = {
+    title: string
+    usersFriends: Array<FriendType>
+}
 
+export type FriendMapStatePropsType = ReturnType<typeof mapStateToProps>
+export type FriendPropsTypes = FriendMapStatePropsType
 
-export const FriendsContainer = () => {
-    return (
-        <StoreContext.Consumer>
-            {
-                (store: ReduxRootStoreType) => {
-                    let state = store.getState().sidebar
+const mapStateToProps = (state: AppRootStateType): MapStateToProps => {
+    return {
+        title: state.sidebar.title,
+        usersFriends: state.sidebar.usersFriends,
+    }
+}
+const mapDispatchToProps = () => {
+    return {
 
-                    return (
-                        <Friends
-                            title={state.title}
-                            usersFriends={state.usersFriends}
-                        />)
-                }
-            }
-        </StoreContext.Consumer>
-    );
-};
+    }
+}
 
+export const FriendsContainer = connect(mapStateToProps, mapDispatchToProps)(Friends)

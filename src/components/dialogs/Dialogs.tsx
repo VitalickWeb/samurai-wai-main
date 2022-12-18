@@ -2,27 +2,10 @@ import React, {ChangeEvent, KeyboardEvent} from "react";
 import st from './Dialogs.module.css';
 import {DialogUsers} from "./dialogUsers/DialogUsers";
 import {DialogMessages} from "./dialogMessages/DialogMessages";
+import {DialogPropsTypes} from "./DialogsContainer";
 
-export type UsersType = {
-    id: string
-    dialog: string
-}
 
-export type DialogsMessagesType = {
-    id: string
-    message: string
-}
-
-type RootDialogsPropsType = {
-    newDialogText: string
-    dataUsers: Array<UsersType>
-    dataMessage: Array<DialogsMessagesType>
-    addDialog: () => void
-    newDialogMessage: (text: string) => void
-}
-
-export const Dialogs = (props: RootDialogsPropsType) => {
-
+export const Dialogs = (props: DialogPropsTypes) => {
 
     const renderUsers = props.dataUsers.map(du => {
         return (
@@ -41,7 +24,7 @@ export const Dialogs = (props: RootDialogsPropsType) => {
     })
 
     const addDialogHandler = () => {
-        props.addDialog()
+        props.addDialog(props.newDialogText)
     }
 
     const newDialogMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {

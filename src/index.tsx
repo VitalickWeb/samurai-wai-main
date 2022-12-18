@@ -2,14 +2,12 @@ import React from 'react';
 import './index.css';
 import ReactDOM from 'react-dom';
 import App from './App';
-import {Provider} from "./StoreContext";
+import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
-import {store} from "./redux/Redux-store";//импортируем Store из redux-store.ts
-import {RootStateType} from "./redux/Store";
+import {AppRootStateType, store} from "./redux/Redux-store";//импортируем Store из redux-store.ts
 
 
-
-export const rerenderEntireTree = (state: RootStateType) => {//вызываем функцию rerenderEntireTree при каждой перерисовке
+export const rerenderEntireTree = (state: AppRootStateType) => {//вызываем функцию rerenderEntireTree при каждой перерисовке
     ReactDOM.render(
         //все дочерние components обрамляем в StoreContext для того что бы всем дочерних компонентам был доступен Store
         <BrowserRouter>
