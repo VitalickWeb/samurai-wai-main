@@ -24,8 +24,6 @@ let initialState = {
 export type InitialProfilePageType = typeof initialState
 
 export const ProfileReducer = (state: InitialProfilePageType = initialState, action: ActionTypes): InitialProfilePageType => {
-   console.log(state)
-   console.log(action)
     switch (action.type) {
         case 'ADD-POST':
             const newPost: PostType = {
@@ -33,15 +31,14 @@ export const ProfileReducer = (state: InitialProfilePageType = initialState, act
                 message: action.postMessage,
                 likeCounts: 0,
             };
-            return {...state,
-                state.posts.push(newPost),//state здесь будет в место profilePage
-                state.newPostText = ''//и здесь тоже
-            } //вместо callSubscriber() преобразователя, преобразования будут делать state и action в параметрах функции
-            return state;//в место инструкции break используем return так как return не даст провалиться кейсу
-        case 'NEW-POST-TEXT-MESSAGE': {
-            state.newPostText = action.newPost//у объекта action теперь и тип и текст
-        }
-            return state;
+            let stateCopy = {...state, posts: [...state.posts]}
+            stateCopy.posts.push(newPost)//state здесь будет в место profilePage
+            stateCopy.newPostText = ''//и здесь тоже
+            //вместо callSubscriber() преобразователя, преобразования будут делать state и action в параметрах функции
+            return stateCopy;//в место инструкции break используем return так как return не даст провалиться кейсу
+        case 'NEW-POST-TEXT-MESSAGE':
+            let stateCopy2 = {...state, newPostText: action.newPost}//у объекта action теперь и тип и текст
+            return stateCopy2;
         default://если придет в ProfileReducer action тип которого не будет в параметрах, то вернем state по умолчанию
             return state;
     };

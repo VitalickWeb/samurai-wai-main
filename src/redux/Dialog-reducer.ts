@@ -40,12 +40,15 @@ const DialogReducer = (state: InitialDialogPageType = initialState, action: Acti
                 id: v1(),
                 message: state.newDialogText,
             }
-            state.dataMessage.push(newDialog)
-            state.newDialogText = ''
-            return state;
+            let stateCopy = {...state, dataMessage: [...state.dataMessage]}
+            stateCopy.dataMessage.push(newDialog)
+            stateCopy.newDialogText = ''
+            return stateCopy;
+
         case 'NEW-DIALOG-TEXT-MESSAGE':
-            state.newDialogText = action.newDialog
-            return state;
+            let stateCopy2 = {...state}
+            stateCopy2.newDialogText = action.newDialog
+            return stateCopy2;
         default:
             return state;
     }
