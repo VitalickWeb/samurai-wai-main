@@ -5,6 +5,9 @@ import {addPostAC, NewPostTextMessageAC} from "./Profile-reducer";
 import {addDialogAC, newDialogTextMessageAC} from "./Dialog-reducer";
 import {PostType} from "../components/profile/myPosts/MyPostContainer";
 import {FriendType} from "../components/friends/FriendsContainer";
+import {UserType} from "../components/users/UsersContainer";
+
+
 
 type ProfilePageType = {
     posts: Array<PostType>
@@ -15,6 +18,9 @@ type DialogPageType = {
     dataMessage: Array<DialogsMessagesType>
     newDialogText: string
 }
+type UsersPageType = {
+    users: Array<UserType>
+}
 
 type SidebarType = {
     title: string
@@ -24,6 +30,7 @@ type SidebarType = {
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogPage: DialogPageType
+    usersPage: UsersPageType
     sidebar: SidebarType
 }
 
@@ -88,15 +95,43 @@ export let store: RootStoreType = {
             ],
             newDialogText: '',
         },
+        usersPage: {
+            users: [
+                {id: v1(), fallowed: true, fullName: 'Vit Bond', status: 'study react',
+                    location: {
+                        country: 'Belarus',
+                        city: 'Minsk',
+                    }
+                },
+                {id: v1(), fallowed: true, fullName: 'Lera Bin', status: 'manicure',
+                    location: {
+                        country: 'Belarus',
+                        city: 'Minsk',
+                    }
+                },
+                {id: v1(), fallowed: true, fullName: 'Sasha Kramer', status: 'worker',
+                    location: {
+                        country: 'Ukraine',
+                        city: 'Kiev',
+                    }
+                },
+                {id: v1(), fallowed: true, fullName: 'Alex Bush', status: 'programming',
+                    location: {
+                        country: 'USA',
+                        city: 'Washington',
+                    }
+                },
+            ],
+        },
         sidebar: {
-            title: "FRIENDS",
+            title: 'FRIENDS',
             usersFriends: [
-                {id: v1(), name: "Vitaliy"},
-                {id: v1(), name: "Natasha"},
-                {id: v1(), name: "Mark"},
-                {id: v1(), name: "Oleg"},
-                {id: v1(), name: "Alexandra"},
-                {id: v1(), name: "Sasha"},
+                {id: v1(), name: 'Vitaliy'},
+                {id: v1(), name: 'Natasha'},
+                {id: v1(), name: 'Mark'},
+                {id: v1(), name: 'Oleg'},
+                {id: v1(), name: 'Alexandra'},
+                {id: v1(), name: 'Sasha'},
             ]
         },
     },

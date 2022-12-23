@@ -27,10 +27,11 @@ export const rerenderEntireTree = (state: AppRootStateType) => {//вызывае
 }
 
 rerenderEntireTree(store.getState())//когда мы узнаем что стэйт изменился, нам нужно у стора запросить этот стэйт заново
-store.subscribe(() => {
-    let state = store.getState()
-    rerenderEntireTree(state)
-})//импортируемый из стэйта subscriber вызывает функцию перерисовки как колбэк
+
+// store.subscribe(() => {
+//     let state = store.getState()
+//     rerenderEntireTree(state)
+// })//импортируемый из стэйта subscriber вызывает функцию перерисовки как колбэк
 
 //debugger в функции rerenderEntireTree определил нам что state приходит к нам - state = {profilePage: {},
 // dialogPage: {},   sidebar: {} }

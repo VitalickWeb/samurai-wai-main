@@ -15,8 +15,15 @@ import {Route} from 'react-router-dom';
 import st from "./components/navigation/Navigation.module.css";
 import {DialogsContainer} from "./components/dialogs/DialogsContainer";
 import {FriendsContainer} from "./components/friends/FriendsContainer";
+import {UsersContainer} from "./components/users/UsersContainer";
 
 const App = () => {
+    //Страницы которые мы организовываем с помощью Route переключаются между собой с помощью URL браузера.
+    // Route - это компонента, которая следит за URL в браузере и если URL совпадает, она делает render, который
+    // вызывает свой метод, который возвращает в этом случае JSX разметку конкретную компоненту Profile и DialogsContainer.
+    // Этим Route не важно каким образом URL изменился в браузере, толи по обычной ссылке, толи через navLink, толи
+    // просто пользователь в ручную вбил, то если там есть что то похожее на этот URL он это рисует, если нет то он
+    // это уничтожает.
     return (
             <div className="app-wrapper">
                 <Header/>
@@ -39,6 +46,10 @@ const App = () => {
                         />}/>
                     <Route path="/news" render={() => <News/>}/>
                     <Route path="/music" render={() => <Music/>}/>
+                    <Route path="/users" render={() =>
+                        <UsersContainer
+
+                        />}/>
                     <Route path="/settings" render={() => <Setting/>}/>
                 </div>
             </div>

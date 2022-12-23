@@ -20,6 +20,9 @@ export const Navigation = () => {
                     <NavLink to="music" activeClassName={st.active}>Music</NavLink>
                 </div>
                 <div className={st.item}>
+                    <NavLink to="/users" activeClassName={st.active}>Find users</NavLink>
+                </div>
+                <div className={st.item}>
                     <NavLink to="/settings" activeClassName={st.active}>Settings</NavLink>
                 </div>
             </div>
