@@ -1,5 +1,5 @@
 import React from 'react';
-import smartCity from '../../images/logo/smartCity.png';
+import smartCity from '../../assets/images/logo/smartCity.png';
 import st from './Header.module.css';
 
 export const Header = () => {

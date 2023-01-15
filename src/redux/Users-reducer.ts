@@ -1,13 +1,12 @@
 import {UserType} from "../components/users/UsersContainer";
-import {v1} from "uuid";
 
 
 const initialState = {
         users: [
-            {id: v1(), fallowed: true, fullName: 'Vit Bond', status: 'study react', location: {country: 'Belarus', city: 'Minsk'}},
-            {id: v1(), fallowed: true, fullName: 'Vera Bon', status: 'manicure', location: {country: 'Belarus', city: 'Minsk'}},
-            {id: v1(), fallowed: false, fullName: 'Sasha Kramer', status: 'worker', location: {country: 'Ukraine', city: 'Kiev'}},
-            {id: v1(), fallowed: false, fullName: 'Alex Bush', status: 'programming', location: {country: 'USA', city: 'Washington'}},
+            //{id: v1(), photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', followed: true, fullName: 'Vit', status: 'study react', location: {country: 'Belarus', city: 'Minsk'}},
+            //{id: v1(), photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', followed: true, fullName: 'Vera', status: 'manicure', location: {country: 'Belarus', city: 'Minsk'}},
+            // {id: v1(), photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', followed: false, fullName: 'Sasha', status: 'worker', location: {country: 'Ukraine', city: 'Kiev'}},
+            // {id: v1(), photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', followed: false, fullName: 'Alex', status: 'programming', location: {country: 'USA', city: 'Washington'}},
         ] as Array<UserType>,
     };
     export type InitialUsersPageType = typeof initialState
@@ -18,25 +17,23 @@ const initialState = {
 
     type ActionsTypes = followAT | unFollowAT | setUsersAT
 
-export const usersReducer = (state: InitialUsersPageType = initialState, action: ActionsTypes): InitialUsersPageType => {
-    console.log({ ...state, users: [...state.users] })
+const usersReducer = (state: InitialUsersPageType = initialState, action: ActionsTypes): InitialUsersPageType => {
     switch (action.type) {
         case 'FALLOWED-FRIEND':
-            return {...state, users: state.users.map(u => u.id === action.userId ? {...u, fallowed: true} : u)}
+            return {...state, users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)}
 
         case 'UNFOLLOWED-FRIEND':
-            return {...state, users: state.users.map(u => u.id === action.userId ? {...u, fallowed: false} : u)}
+            return {...state, users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u)}
 
         case 'SET-USERS':
             //откуда то придут пользователи, мы берм старый state, взять пользователей которые там были
-            //и пере записать пользователями, которые пришли к нам в action
+            //и перезаписать пользователями, которые пришли к нам в action
             return { ...state, users: [...state.users, ...action.usersAdd] }//склеиваем 2 массива
 
         default:
             return state
     }
 }
-
 export const followAC = (userId: string) => {
     return {
         type: 'FALLOWED-FRIEND',
@@ -55,3 +52,5 @@ export const setUsersAC = (usersAdd: Array<UserType>) => {
         usersAdd
     } as const
 }
+
+export default usersReducer

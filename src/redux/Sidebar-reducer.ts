@@ -1,5 +1,4 @@
 import {v1} from "uuid";
-import {ActionsTypes} from "./Store";
 import {FriendType} from "../components/friends/FriendsContainer";
 
 let initialState = {
@@ -16,7 +15,7 @@ let initialState = {
 
 export type SidebarType = typeof initialState
 
-export const SidebarReducer = (state: SidebarType = initialState, action: ActionsTypes): SidebarType => {
+export const SidebarReducer = (state: SidebarType = initialState, action: any): SidebarType => {
     switch (action.type) {
 
     }

@@ -27,14 +27,14 @@ type SidebarType = {
     usersFriends: Array<FriendType>
 }
 
-export type RootStateType = {
+type RootStateType = {
     profilePage: ProfilePageType
     dialogPage: DialogPageType
     usersPage: UsersPageType
     sidebar: SidebarType
 }
 
-export type RootStoreType = {
+type RootStoreType = {
     _state: RootStateType
     _callSubscriber: () => void
     subscriber: (observer: () => void) => void
@@ -43,7 +43,7 @@ export type RootStoreType = {
 }
 
 //Для всех возможных экшэнов создаем типы:
-export type ActionsTypes = ReturnType<typeof addPostAC>
+type ActionsTypes = ReturnType<typeof addPostAC>
                         | ReturnType<typeof NewPostTextMessageAC>
                         | ReturnType<typeof addDialogAC>
                         | ReturnType<typeof newDialogTextMessageAC>
@@ -56,7 +56,7 @@ export type ActionsTypes = ReturnType<typeof addPostAC>
 
 // пересмотреть 34 - 38, 42 уроки
 
-export let store: RootStoreType = {
+let store: RootStoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -97,29 +97,51 @@ export let store: RootStoreType = {
         },
         usersPage: {
             users: [
-                {id: v1(), fallowed: true, fullName: 'Vit Bond', status: 'study react',
-                    location: {
-                        country: 'Belarus',
-                        city: 'Minsk',
-                    }
+                {id: v1(),
+                    photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
+                    followed: true, name: 'Vit Bond', status: 'study react',
+                    photos: {
+                        small: null
+                    },
+                    // location: {
+                    //     country: 'Belarus',
+                    //     city: 'Minsk',
+                    // }
                 },
-                {id: v1(), fallowed: true, fullName: 'Lera Bin', status: 'manicure',
-                    location: {
-                        country: 'Belarus',
-                        city: 'Minsk',
-                    }
+                {   id: v1(),
+                    photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
+                    followed: true,
+                    name: 'Lara Bin',
+                    status: 'manicure',
+                    photos: {
+                        small: null
+                    },
+                    // location: {
+                    //     country: 'Belarus',
+                    //     city: 'Brest',
+                    // }
                 },
-                {id: v1(), fallowed: true, fullName: 'Sasha Kramer', status: 'worker',
-                    location: {
-                        country: 'Ukraine',
-                        city: 'Kiev',
-                    }
+                {id: v1(),
+                    photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
+                    followed: true, name: 'Sasha Kramer', status: 'worker',
+                    photos: {
+                        small: null
+                    },
+                    // location: {
+                    //     country: 'Ukraine',
+                    //     city: 'Kiev',
+                    // }
                 },
-                {id: v1(), fallowed: true, fullName: 'Alex Bush', status: 'programming',
-                    location: {
-                        country: 'USA',
-                        city: 'Washington',
-                    }
+                {id: v1(),
+                    photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
+                    followed: true, name: 'Alex Bush', status: 'programming',
+                    photos: {
+                        small: null
+                    },
+                    // location: {
+                    //     country: 'USA',
+                    //     city: 'Washington',
+                    // }
                 },
             ],
         },

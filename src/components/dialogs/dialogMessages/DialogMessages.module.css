@@ -12,10 +12,8 @@
     margin-right: 10px;
 }
 .blockDialog .messagesItem {
-    /*position: relative;*/
     background-color: azure;
     max-width: 300px;
-    /*height: auto;*/
     border-radius: 5px;
     padding: 5px 10px 6px 10px;
     color: #555;

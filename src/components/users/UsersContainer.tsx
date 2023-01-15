@@ -7,13 +7,17 @@ import {followAC, setUsersAC, unFollowAC} from "../../redux/Users-reducer";
 
 export type UserType = {
     id: string
-    fallowed: boolean
-    fullName: string
+    photoURL: string
+    followed: boolean
+    name: string
     status: string
-    location: {
-        country: string,
-        city: string,
+    photos: {
+        small: null
     }
+    // location: {
+    //     country: string,
+    //     city: string,
+    // }
 }
 
 export type MapStateToProps = {
@@ -22,11 +26,11 @@ export type MapStateToProps = {
 export type MapDispatchToProps = {
     follow: (userId: string) => void
     unFollow: (userId: string) => void
-    setUsers: (users: Array<UserType>) => void
+    setUsers: (usersAdd: Array<UserType>) => void
 }
 export type UsersMapStatePropsType = ReturnType<typeof mapStateToProps>
-export type UsersMapDispatchPropsType = ReturnType<typeof mapStateToProps>
-export type UsersPageType = UsersMapStatePropsType | UsersMapDispatchPropsType
+export type UsersMapDispatchPropsType = ReturnType<typeof mapDispatchToProps>
+export type UsersPageType = UsersMapStatePropsType & UsersMapDispatchPropsType
 
 let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
     return {
@@ -35,8 +39,8 @@ let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
 }
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {
     return {
-        follow: (userId: string) => {
-            dispatch(followAC(userId))
+        follow: (userId: string) => {//функция которая принимает пользовательский id, что бы передать его в AC, сформировать
+            dispatch(followAC(userId))//action с нужным id и задиспатчить его.
         },
         unFollow: (userId: string) => {
             dispatch(unFollowAC(userId))
