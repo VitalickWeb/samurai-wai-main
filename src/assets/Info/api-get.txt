@@ -1,4 +1,3 @@
-import React from 'react'
 
 //Есть такое понятие как базовый URL и любая API серверная имеет какой-то базовый URL 'адрес сайта.com/api/версия' -
 //https://social-network.samuraijs.com.api/1.0 и вот к этому базовому URL мы цепляем какие-то конкретные приписки - /users например
