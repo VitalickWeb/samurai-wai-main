@@ -14,17 +14,23 @@ import axios from "axios";
 //класса User, он от этого объекта будет хотеть самого главного, получить от него JSX.
 
 export class Users extends React.Component<UsersPageType> {
-    constructor(props: UsersPageType) {
-        super(props);
-        //Для того чтобы сделать запрос на сервер необязательно использовать конструкцию if,
-        //так как конструирование объекта происходит всего один раз.
-        if (this.props.users.length === 0) {
-            axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-                // debugger
-                this.props.setUsers(response.data.items)
-            })
-        }
+    componentDidMount() {
+        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+            this.props.setUsers(response.data.items)
+        })
     }
+
+    // constructor(props: UsersPageType) {
+    //     super(props);
+    //     //Для того чтобы сделать запрос на сервер необязательно использовать конструкцию if,
+    //     //так как конструирование объекта происходит всего один раз.
+    //     if (this.props.users.length === 0) {
+    //         axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+    //             // debugger
+    //             this.props.setUsers(response.data.items)
+    //         })
+    //     }
+    // }
 
     // clickGetUsers = () => {//clickGetUsers - метод класса Users
     //     if (this.props.users.length === 0) {
@@ -49,7 +55,6 @@ export class Users extends React.Component<UsersPageType> {
 
         return (
             <div key={u.id}>
-
                 <img className={st.photoUser} src={u.photos.small !== null ? u.photos.small : avatarPhoto}/>
                 <div className={st.boxButton}>
                     {!u.followed
