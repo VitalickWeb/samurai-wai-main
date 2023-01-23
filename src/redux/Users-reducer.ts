@@ -2,22 +2,26 @@ import {UserType} from "../components/users/UsersContainer";
 
 
 const initialState = {
-        users: [
-            //{id: v1(), photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', followed: true, fullName: 'Vit', status: 'study react', location: {country: 'Belarus', city: 'Minsk'}},
-            //{id: v1(), photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', followed: true, fullName: 'Vera', status: 'manicure', location: {country: 'Belarus', city: 'Minsk'}},
-            // {id: v1(), photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', followed: false, fullName: 'Sasha', status: 'worker', location: {country: 'Ukraine', city: 'Kiev'}},
-            // {id: v1(), photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', followed: false, fullName: 'Alex', status: 'programming', location: {country: 'USA', city: 'Washington'}},
-        ] as Array<UserType>,
+        users: [] as Array<UserType>,
+        pageSize: 30,
+        totalUsersCount: 0,
+        currentPage: 3
     };
     export type InitialUsersPageType = typeof initialState
 
     type followAT = ReturnType<typeof followAC>
     type unFollowAT = ReturnType<typeof unFollowAC>
     type setUsersAT = ReturnType<typeof setUsersAC>
+    type setCurrentPageAT = ReturnType<typeof setCurrentPageAC>
+    type setTotalCountAT = ReturnType<typeof setTotalCountAC>
 
-    type ActionsTypes = followAT | unFollowAT | setUsersAT
+    type ActionsTypes = followAT | unFollowAT | setUsersAT | setCurrentPageAT | setTotalCountAT
+
+//action нужны reducers - редьюсер будет анализировать этот action и что-то изменять
+//reducer принимает старый state и action и меняется этот state на основании action.
 
 const usersReducer = (state: InitialUsersPageType = initialState, action: ActionsTypes): InitialUsersPageType => {
+        console.log(state, action)
     switch (action.type) {
         case 'FALLOWED-FRIEND':
             return {...state, users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)}
@@ -28,7 +32,13 @@ const usersReducer = (state: InitialUsersPageType = initialState, action: Action
         case 'SET-USERS':
             //откуда то придут пользователи, мы берм старый state, взять пользователей которые там были
             //и перезаписать пользователями, которые пришли к нам в action
-            return { ...state, users: [...state.users, ...action.usersAdd] }//склеиваем 2 массива
+            return { ...state, users: action.usersAdd }//перезатираем старый массив пользователей новым
+
+        case 'SET-CURRENT-PAGE':
+            return {...state, currentPage: action.currentPage}
+
+        case 'SET-TOTAL-COUNT':
+            return {...state, totalUsersCount: action.totalCount}
 
         default:
             return state
@@ -52,5 +62,20 @@ export const setUsersAC = (usersAdd: Array<UserType>) => {
         usersAdd
     } as const
 }
+export const setCurrentPageAC = (currentPage: number) => {
+    return {
+        type: 'SET-CURRENT-PAGE',
+        currentPage,
+    } as const
+}
+export const setTotalCountAC = (count: number) => {
+    return {
+        type: 'SET-TOTAL-COUNT',
+        totalCount: count,
+    } as const
+}
 
 export default usersReducer
+
+//Берем реальное значение пользователей во вкладке Network Preview при первом запросе Users?Page=2&Count=5
+//Закидываем их в reducer
