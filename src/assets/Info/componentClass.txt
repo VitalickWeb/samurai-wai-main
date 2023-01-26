@@ -84,7 +84,7 @@ class Man {
 }
 
 В реальной жизни мы пишем так:
-class Man extends React.Component {
+class Man extends React.Component<type> {
     constructor(props)
     super(props)
 }
