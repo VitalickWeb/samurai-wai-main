@@ -1,5 +1,5 @@
 import React from 'react';
-import preSpinner from "../../assets/images/Default-users/Spinner-1s-98px.svg";
+import preSpinner from "../../assets/images/Default-users/Spinner-0.7s-61px.svg";
 
 export type PreloaderPropsType = {
 
