@@ -10,19 +10,19 @@ const initialState = {
     };
     export type InitialUsersPageType = typeof initialState
 
-    type followAT = ReturnType<typeof followAC>
-    type unFollowAT = ReturnType<typeof unFollowAC>
-    type setUsersAT = ReturnType<typeof setUsersAC>
-    type setCurrentPageAT = ReturnType<typeof setCurrentPageAC>
-    type setTotalCountAT = ReturnType<typeof setTotalCountAC>
-    type toggleIsFetchingAT = ReturnType<typeof toggleIsFetchingAC>
+    type followAT = ReturnType<typeof follow>
+    type unFollowAT = ReturnType<typeof unFollow>
+    type setUsersAT = ReturnType<typeof setUsers>
+    type setCurrentPageAT = ReturnType<typeof setCurrentPage>
+    type setTotalCountAT = ReturnType<typeof setTotalCount>
+    type toggleIsFetchingAT = ReturnType<typeof toggleIsFetching>
 
-    type ActionsTypes = followAT | unFollowAT | setUsersAT | setCurrentPageAT | setTotalCountAT | toggleIsFetchingAT
+    export type ActionsTypes = followAT | unFollowAT | setUsersAT | setCurrentPageAT | setTotalCountAT | toggleIsFetchingAT
 
 //action нужны reducers - редьюсер будет анализировать этот action и что-то изменять
 //reducer принимает старый state и action и меняется этот state на основании action.
 
-const usersReducer = (state: InitialUsersPageType = initialState, action: ActionsTypes): InitialUsersPageType => {
+export const usersReducer = (state: InitialUsersPageType = initialState, action: ActionsTypes): InitialUsersPageType => {
         console.log(state, action)
     switch (action.type) {
         case 'FALLOWED-FRIEND':
@@ -49,37 +49,37 @@ const usersReducer = (state: InitialUsersPageType = initialState, action: Action
             return state
     }
 }
-export const followAC = (userId: string) => {
+export const follow = (userId: string) => {
     return {
         type: 'FALLOWED-FRIEND',
         userId
     } as const
 }
-export const unFollowAC = (userId: string) => {
+export const unFollow = (userId: string) => {
     return {
         type: 'UNFOLLOWED-FRIEND',
         userId
     } as const
 }
-export const setUsersAC = (usersAdd: Array<UserType>) => {
+export const setUsers = (usersAdd: Array<UserType>) => {
     return {
         type: 'SET-USERS',
         usersAdd
     } as const
 }
-export const setCurrentPageAC = (currentPage: number) => {
+export const setCurrentPage = (currentPage: number) => {
     return {
         type: 'SET-CURRENT-PAGE',
         currentPage,
     } as const
 }
-export const setTotalCountAC = (count: number) => {
+export const setTotalCount = (count: number) => {
     return {
         type: 'SET-TOTAL-COUNT',
         totalCount: count,
     } as const
 }
-export const toggleIsFetchingAC = (load: boolean) => {
+export const toggleIsFetching = (load: boolean) => {
     return {
         type: 'TOGGLE-PRELOADER',
         isFetching: load

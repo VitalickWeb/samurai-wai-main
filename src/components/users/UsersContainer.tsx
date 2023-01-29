@@ -1,14 +1,13 @@
 import React from 'react';
 import {AppRootStateType} from "../../redux/Redux-store";
-import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {
-    followAC,
-    setCurrentPageAC,
-    setTotalCountAC,
-    setUsersAC,
-    toggleIsFetchingAC,
-    unFollowAC
+    follow,
+    unFollow,
+    setCurrentPage,
+    setTotalCount,
+    setUsers,
+    toggleIsFetching,
 } from "../../redux/Users-reducer";
 import {Users} from "./Users";
 import axios from "axios";
@@ -106,8 +105,8 @@ export class UsersClassContainer extends React.Component<UsersPageType> {//ид�
     }
 }
 
-export type UsersMapStatePropsType = ReturnType<typeof mapStateToProps>
-export type UsersMapDispatchPropsType = ReturnType<typeof mapDispatchToProps>
+export type UsersMapStatePropsType = MapStateToProps
+export type UsersMapDispatchPropsType = MapDispatchToProps
 export type UsersPageType = UsersMapStatePropsType & UsersMapDispatchPropsType
 
 let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
@@ -119,28 +118,34 @@ let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
         isFetching: state.usersPage.isFetching
     }
 }
-let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {
-    return {
-        follow: (userId: string) => {//функция которая принимает пользовательский id, что бы передать его в AC, сформировать
-            dispatch(followAC(userId))//action с нужным id и задиспатчить его.
-        },
-        unFollow: (userId: string) => {
-            dispatch(unFollowAC(userId))
-        },
-        setUsers: (usersAdd: Array<UserType>) => {
-            dispatch(setUsersAC(usersAdd))
-        },
-        setCurrentPage: (pageNumber: number) => {//dispatch on the reducer 4
-            dispatch(setCurrentPageAC(pageNumber))//диспатчим то что нам возвращает вызов AC. Вызов AC всегда возвращает объект
-        },
-        setTotalCount: (count: number) => {
-            dispatch(setTotalCountAC(count))
-        },
-        toggleIsFetching: (load: boolean) => {
-            dispatch(toggleIsFetchingAC(load))
-        }
-    }
-}
+// let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {
+//     return {
+//         follow: (userId: string) => {//функция которая принимает пользовательский id, что бы передать его в AC, сформировать
+//             dispatch(followAC(userId))//action с нужным id и задиспатчить его.
+//         },
+//         unFollow: (userId: string) => {
+//             dispatch(unFollowAC(userId))
+//         },
+//         setUsers: (usersAdd: Array<UserType>) => {
+//             dispatch(setUsersAC(usersAdd))
+//         },
+//         setCurrentPage: (pageNumber: number) => {//dispatch on the reducer 4
+//             dispatch(setCurrentPageAC(pageNumber))//диспатчим то что нам возвращает вызов AC. Вызов AC всегда возвращает объект
+//         },
+//         setTotalCount: (count: number) => {
+//             dispatch(setTotalCountAC(count))
+//         },
+//         toggleIsFetching: (load: boolean) => {
+//             dispatch(toggleIsFetchingAC(load))
+//         }
+//     }
+// }
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersClassContainer)
+
+
+//Рефакторинг mapDispatchToProps вторым параметром сразу вызываем AC в объекте сократив много кода
+export const UsersContainer = connect(mapStateToProps,
+    {
+        follow, unFollow, setUsers, setCurrentPage, setTotalCount, toggleIsFetching
+    })(UsersClassContainer)
 //классовая компонента UsersClassContainer вызывается контейнерной компонентой UsersContainer
