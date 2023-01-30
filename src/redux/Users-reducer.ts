@@ -2,28 +2,28 @@ import {UserType} from "../components/users/UsersContainer";
 
 
 const initialState = {
-        users: [] as Array<UserType>,
-        pageSize: 80,
-        totalUsersCount: 0,
-        currentPage: 1,
-        isFetching: false
-    };
-    export type InitialUsersPageType = typeof initialState
+    users: [] as Array<UserType>,
+    pageSize: 80,
+    totalUsersCount: 0,
+    currentPage: 1,
+    isFetching: false
+};
+export type InitialUsersPageType = typeof initialState
 
-    type followAT = ReturnType<typeof follow>
-    type unFollowAT = ReturnType<typeof unFollow>
-    type setUsersAT = ReturnType<typeof setUsers>
-    type setCurrentPageAT = ReturnType<typeof setCurrentPage>
-    type setTotalCountAT = ReturnType<typeof setTotalCount>
-    type toggleIsFetchingAT = ReturnType<typeof toggleIsFetching>
+type followAT = ReturnType<typeof follow>
+type unFollowAT = ReturnType<typeof unFollow>
+type setUsersAT = ReturnType<typeof setUsers>
+type setCurrentPageAT = ReturnType<typeof setCurrentPage>
+type setTotalCountAT = ReturnType<typeof setTotalCount>
+type toggleIsFetchingAT = ReturnType<typeof toggleIsFetching>
 
-    export type ActionsTypes = followAT | unFollowAT | setUsersAT | setCurrentPageAT | setTotalCountAT | toggleIsFetchingAT
+export type ActionsTypes = followAT | unFollowAT | setUsersAT | setCurrentPageAT | setTotalCountAT |
+    toggleIsFetchingAT
 
 //action нужны reducers - редьюсер будет анализировать этот action и что-то изменять
 //reducer принимает старый state и action и меняется этот state на основании action.
 
 export const usersReducer = (state: InitialUsersPageType = initialState, action: ActionsTypes): InitialUsersPageType => {
-        console.log(state, action)
     switch (action.type) {
         case 'FALLOWED-FRIEND':
             return {...state, users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)}

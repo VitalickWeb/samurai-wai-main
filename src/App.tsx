@@ -7,7 +7,6 @@ import './components/dialogs/Dialogs.module.css';
 
 import {Header} from './components/header/Header';
 import {Navigation} from './components/navigation/Navigation';
-import {Profile} from './components/profile/Profile';
 import {News} from './components/news/News';
 import {Music} from './components/music/Music';
 import {Setting} from "./components/settings/Setting";
@@ -16,6 +15,7 @@ import st from "./components/navigation/Navigation.module.css";
 import {DialogsContainer} from "./components/dialogs/DialogsContainer";
 import {FriendsContainer} from "./components/friends/FriendsContainer";
 import {UsersContainer} from "./components/users/UsersContainer";
+import {ProfileContainer} from "./components/profile/ProfileContainer";
 
 const App = () => {
     //Страницы которые мы организовываем с помощью Route переключаются между собой с помощью URL браузера.
@@ -37,7 +37,7 @@ const App = () => {
                 </div>
                 <div className="app-wrapper-content">
                     <Route path="/profile" render={() =>
-                        <Profile
+                        <ProfileContainer
 
                         />}/>
                     <Route path="/dialogs" render={() =>

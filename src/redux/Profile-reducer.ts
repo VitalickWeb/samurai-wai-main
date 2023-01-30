@@ -1,25 +1,26 @@
 import {v1} from "uuid";
 import {PostType} from "../components/profile/myPosts/MyPostContainer";
+import {DataUserType} from "../components/profile/ProfileContainer";
 
 
 export type addPostAT = ReturnType<typeof addPostAC>
 export type NewPostTextMessageAT = ReturnType<typeof NewPostTextMessageAC>
+export type setUserProfileChangeAT = ReturnType<typeof setUserProfileChange>
+export type setUserFullNameAT = ReturnType<typeof setDataUser>
 
-export type ActionTypes = addPostAT | NewPostTextMessageAT
+export type ActionTypes = addPostAT | NewPostTextMessageAT | setUserProfileChangeAT | setUserFullNameAT
 
 let initialState = {
-        posts: [
-            {id: v1(), message: 'Hello, how are you?', likeCounts: 4},
-            {id: v1(), message: 'Hi, i\'m fine', likeCounts: 6},
-            {id: v1(), message: 'and you?', likeCounts: 2},
-            {id: v1(), message: 'First message', likeCounts: 8},
-            {id: v1(), message: 'Second message', likeCounts: 7},
-            {id: v1(), message: 'Third message', likeCounts: 24},
-            {id: v1(), message: 'Yo', likeCounts: 28},
-            {id: v1(), message: 'Last message', likeCounts: 15},
-        ] as Array<PostType>,
-        newPostText: '',
-    };
+    profile: null,
+    dataUser: {} as DataUserType,
+    posts: [
+        {id: v1(), message: 'Hello, how are you?', likeCounts: 4},
+        {id: v1(), message: 'Hi, i\'m fine', likeCounts: 6},
+        {id: v1(), message: 'and you?', likeCounts: 2},
+        {id: v1(), message: 'First message', likeCounts: 8},
+    ] as Array<PostType>,
+    newPostText: '',
+};
 
 export type InitialProfilePageType = typeof initialState
 
@@ -43,6 +44,17 @@ export const ProfileReducer = (state: InitialProfilePageType = initialState, act
                 ...state,
                 newPostText: action.newPost//у объекта action теперь и тип и текст
             }
+
+        case 'SET-USER-PROFILE-CHANGE':
+            return {
+                ...state, profile: action.profile
+            }
+
+        case 'SET-DATA-USER':
+            return {
+                ...state, dataUser: action.dataUser
+            }
+
         default://если придет в ProfileReducer action тип которого не будет в параметрах, то вернем state по умолчанию
             return state;
     };
@@ -56,12 +68,22 @@ export const addPostAC = (postMessage: string) => {
         postMessage: postMessage
     } as const
 }
-
 export const NewPostTextMessageAC = (newPost: string) => {
     return {
         type: 'NEW-POST-TEXT-MESSAGE',
         newPost: newPost
     } as const
 }
-
+export const setUserProfileChange = (profile: null) => {
+    return {
+        type: 'SET-USER-PROFILE-CHANGE',
+        profile
+    } as const
+}
+export const setDataUser = (dataUser: DataUserType) => {
+    return {
+        type: 'SET-DATA-USER',
+        dataUser
+    } as const
+}
 export default ProfileReducer;

@@ -20,6 +20,7 @@ export type UserType = {
     name: string
     status: string
     photos: {
+        large: null
         small: null
     }
     // location: {
@@ -89,7 +90,7 @@ export class UsersClassContainer extends React.Component<UsersPageType> {//ид�
         return (
             <>
                 {this.props.isFetching ? <Preloader /> : false}
-                {/*пока загружается страница показывается preloader!*/}
+                {/*пока загружается страница, показывается preloader!*/}
                 <Users
                     totalUsersCount={this.props.totalUsersCount}
                     pageSize={this.props.pageSize}
@@ -140,8 +141,6 @@ let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
 //         }
 //     }
 // }
-
-
 
 //Рефакторинг mapDispatchToProps вторым параметром сразу вызываем AC в объекте сократив много кода
 export const UsersContainer = connect(mapStateToProps,

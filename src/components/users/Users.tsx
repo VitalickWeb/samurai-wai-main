@@ -2,6 +2,7 @@ import React from 'react';
 import {UserType} from './UsersContainer';
 import st from './Users.module.css'
 import avatarPhoto from '../../assets/images/Default-users/avatar.png'
+import {NavLink} from "react-router-dom";
 
 //import * as axios from "axios";
 //* as означает - импортируй все, что там экспортируется под общим названием axios - то есть все упаковываем в один объект,
@@ -44,7 +45,9 @@ export const Users = (props: UsersPropsType) => {
 
         return (
             <div key={u.id}>
-                <img className={st.photoUser} src={u.photos.small !== null ? u.photos.small : avatarPhoto}/>
+                <NavLink to={"/profile/" + u.id}>
+                    <img className={st.photoUser} src={u.photos.small !== null ? u.photos.small : avatarPhoto}/>
+                </NavLink>
                 <div className={st.boxButton}>
                     {!u.followed
                         ? <button className={st.buttonFollow} onClick={onClickFollow}>UnFollow</button>

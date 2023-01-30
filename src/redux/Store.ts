@@ -101,7 +101,8 @@ let store: RootStoreType = {
                     photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
                     followed: true, name: 'Vit Bond', status: 'study react',
                     photos: {
-                        small: null
+                        small: null,
+                        large: null
                     },
                     // location: {
                     //     country: 'Belarus',
@@ -114,7 +115,8 @@ let store: RootStoreType = {
                     name: 'Lara Bin',
                     status: 'manicure',
                     photos: {
-                        small: null
+                        small: null,
+                        large: null
                     },
                     // location: {
                     //     country: 'Belarus',
@@ -125,7 +127,8 @@ let store: RootStoreType = {
                     photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
                     followed: true, name: 'Sasha Kramer', status: 'worker',
                     photos: {
-                        small: null
+                        small: null,
+                        large: null
                     },
                     // location: {
                     //     country: 'Ukraine',
@@ -136,7 +139,8 @@ let store: RootStoreType = {
                     photoURL: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
                     followed: true, name: 'Alex Bush', status: 'programming',
                     photos: {
-                        small: null
+                        small: null,
+                        large: null
                     },
                     // location: {
                     //     country: 'USA',
