@@ -11,5 +11,30 @@
     grid-area: a;
     background-color: #888;
     margin: 20px 0 0 20px;
+}
+.imageJob {
+    background-image: url("https://i.ytimg.com/vi/yF_2L6UN81E/maxresdefault.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100px;
+}
 
+.imageFindJob {
+    background-image: url("https://st3.depositphotos.com/1177973/13993/i/600/depositphotos_139931542-stock-photo-handsome-young-programmer.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100px;
+}
+
+.blockContacts {
+    width: 40%;
+    border: 1px solid;
+
+}
+.contacts {
+    display: inline-block;
+    display: flex;
+    justify-content: space-between;
 }

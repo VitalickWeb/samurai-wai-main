@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from "axios";
-import {setDataUser, setUserProfileChange} from "../../redux/Profile-reducer";
+import {setDataUser} from "../../redux/Profile-reducer";
 import {AppRootStateType} from "../../redux/Redux-store";
 import {connect} from "react-redux";
 import {Profile} from "./Profile";
@@ -8,22 +8,22 @@ import {Profile} from "./Profile";
 export type DataUserType = {
     aboutMe: string
     contacts: {
-        facebook: null | string
-        "website": null | string
-        "vk": null | string
-        "twitter": string
-        "instagram": null | string
-        "youtube": null | string
-        "github": null | string
-        "mainLink": null | string
+        facebook: string
+        website: null
+        vk: string
+        twitter: string
+        instagram: string
+        youtube: null
+        github: string
+        mainLink: null
     },
-    "lookingForAJob": boolean
-    "lookingForAJobDescription": string
-    "fullName": string
-    "userId": number
-    "photos": {
-        "small": null | string
-        "large": null | string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: {
+        small: string
+        large: string
     }
 }
 export type MapStateToProps = {
@@ -60,12 +60,12 @@ export type ProfilePageType = ProfileMapStatePropsType & ProfileMapDispatchProps
 
 let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
     return {
-        dataUser: state.profilePage.dataUser
+        dataUser: state.profilePage.dataUser,
     }
 }
 
 //Рефакторинг mapDispatchToProps вторым параметром сразу вызываем AC в объекте сократив много кода
 export const ProfileContainer = connect(mapStateToProps,
     {
-        setUserProfileChange, setDataUser
+        setDataUser
     })(ProfileClassContainer)

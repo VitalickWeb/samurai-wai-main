@@ -5,13 +5,11 @@ import {DataUserType} from "../components/profile/ProfileContainer";
 
 export type addPostAT = ReturnType<typeof addPostAC>
 export type NewPostTextMessageAT = ReturnType<typeof NewPostTextMessageAC>
-export type setUserProfileChangeAT = ReturnType<typeof setUserProfileChange>
 export type setUserFullNameAT = ReturnType<typeof setDataUser>
 
-export type ActionTypes = addPostAT | NewPostTextMessageAT | setUserProfileChangeAT | setUserFullNameAT
+export type ActionTypes = addPostAT | NewPostTextMessageAT | setUserFullNameAT
 
 let initialState = {
-    profile: null,
     dataUser: {} as DataUserType,
     posts: [
         {id: v1(), message: 'Hello, how are you?', likeCounts: 4},
@@ -45,11 +43,6 @@ export const ProfileReducer = (state: InitialProfilePageType = initialState, act
                 newPostText: action.newPost//у объекта action теперь и тип и текст
             }
 
-        case 'SET-USER-PROFILE-CHANGE':
-            return {
-                ...state, profile: action.profile
-            }
-
         case 'SET-DATA-USER':
             return {
                 ...state, dataUser: action.dataUser
@@ -74,16 +67,11 @@ export const NewPostTextMessageAC = (newPost: string) => {
         newPost: newPost
     } as const
 }
-export const setUserProfileChange = (profile: null) => {
-    return {
-        type: 'SET-USER-PROFILE-CHANGE',
-        profile
-    } as const
-}
 export const setDataUser = (dataUser: DataUserType) => {
     return {
         type: 'SET-DATA-USER',
         dataUser
     } as const
 }
+
 export default ProfileReducer;

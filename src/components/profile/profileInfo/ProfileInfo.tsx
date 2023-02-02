@@ -15,12 +15,27 @@ export const ProfileInfo = ({dataUser}: ProfileInfoPropsType) => {
     return (
         <>
             <div className={st.image}>
-                {/*<img src="https://static1.gensler.com/uploads/image/41812/filename/_000-cities-comfidential-2000x1125_1642627052.jpg"/>*/}
+
             </div>
             <div className={st.avaDesc}>
-                <img src={dataUser.photos.large ? dataUser.photos.large : ''} alt=""/>
-                <span>{dataUser.fullName}</span>
-                <span>ava description</span>
+                <img src={dataUser.photos.large} alt=""/>
+                <div><span>Full Name: </span>{dataUser.fullName}</div>
+                Looking for a job status: {!dataUser.lookingForAJob
+                ? <img className={st.imageJob} src="https://i.ytimg.com/vi/yF_2L6UN81E/maxresdefault.jpg" alt=""/>
+                : <img className={st.imageFindJob}
+                       src="https://st3.depositphotos.com/1177973/13993/i/600/depositphotos_139931542-stock-photo-handsome-young-programmer.jpg"
+                       alt=""/>
+            }
+                <div><span>Looking For a job description: </span>{dataUser.lookingForAJobDescription}</div>
+                <div className={st.blockContacts}>Contacts:<span className={st.contacts}>facebook: { dataUser.contacts.facebook } </span></div>
+                <div className={st.blockContacts}><span className={st.contacts}>github: { dataUser.contacts.github } </span></div>
+                <div className={st.blockContacts}><span className={st.contacts}>vk: { dataUser.contacts.vk } </span></div>
+                <div className={st.blockContacts}><span className={st.contacts}>instagram: { dataUser.contacts.instagram } </span></div>
+                <div className={st.blockContacts}><span className={st.contacts}>twitter: { dataUser.contacts.twitter } </span></div>
+                <div className={st.blockContacts}><span className={st.contacts}>mainLink: { dataUser.contacts.mainLink } </span></div>
+                <div className={st.blockContacts}><span className={st.contacts}>website: { dataUser.contacts.website } </span></div>
+                <div className={st.blockContacts}><span className={st.contacts}>youtube: { dataUser.contacts.youtube } </span></div>
+                <div>About me: {dataUser.aboutMe}</div>
             </div>
         </>
     );
