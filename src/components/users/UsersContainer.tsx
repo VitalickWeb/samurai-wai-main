@@ -46,7 +46,7 @@ export type MapDispatchToProps = {
 }
 
 
-export class UsersClassContainer extends React.Component<UsersPageType> {//идет вызов классовой компоненты
+class UsersClassContainer extends React.Component<UsersPageType> {//идет вызов классовой компоненты
     componentDidMount() {//в этом методе только можно делать сайд эффекты
         this.props.toggleIsFetching(true)//вызываем функцию из mapDispatchToProps, сработает при перезагрузке страницы
             //запрос пошел

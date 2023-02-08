@@ -4,26 +4,27 @@ import {setDataUser} from "../../redux/Profile-reducer";
 import {AppRootStateType} from "../../redux/Redux-store";
 import {connect} from "react-redux";
 import {Profile} from "./Profile";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 
 export type DataUserType = {
     aboutMe: string
     contacts: {
         facebook: string
-        website: null
+        website: string
         vk: string
         twitter: string
         instagram: string
-        youtube: null
+        youtube: string
         github: string
-        mainLink: null
+        mainLink: string
     },
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
     userId: number
     photos: {
-        small: string
-        large: string
+        small: string | undefined
+        large: string | undefined
     }
 }
 export type MapStateToProps = {
@@ -34,10 +35,14 @@ export type MapDispatchToProps = {
     setDataUser: (dataUser: DataUserType) => void
 }
 
-export class ProfileClassContainer extends React.Component<ProfilePageType> {
+export class ProfileClassContainer extends React.Component<RouteComponentProps<{userId: string}> & ProfilePageType, AppRootStateType>{
 
     componentDidMount() {//только в этом методе можно делать сайд эффекты
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`).then(response => {
+        let userId = this.props.match.params.userId //достаем данные из того что приходит нам в параметрах profile
+        if (!userId) {
+            userId = '2'
+        }
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then(response => {
             this.props.setDataUser(response.data)
         })
     }
@@ -54,9 +59,7 @@ export class ProfileClassContainer extends React.Component<ProfilePageType> {
     }
 };
 
-export type ProfileMapStatePropsType = MapStateToProps
-export type ProfileMapDispatchPropsType = MapDispatchToProps
-export type ProfilePageType = ProfileMapStatePropsType & ProfileMapDispatchPropsType
+export type ProfilePageType = MapStateToProps & MapDispatchToProps & {}
 
 let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
     return {
@@ -64,8 +67,11 @@ let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
     }
 }
 
+let withUrlDataContainerComponent = withRouter(ProfileClassContainer)//обволакиваем третий раз в контейнерную компоненту
+// для того что бы прокинуть в нашу конечную компоненту данные из URL
+
 //Рефакторинг mapDispatchToProps вторым параметром сразу вызываем AC в объекте сократив много кода
-export const ProfileContainer = connect(mapStateToProps,
+export const ProfileContainer = connect<MapStateToProps, MapDispatchToProps, {}, AppRootStateType>(mapStateToProps,
     {
         setDataUser
-    })(ProfileClassContainer)
+    })(withUrlDataContainerComponent)

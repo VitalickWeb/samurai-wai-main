@@ -16,6 +16,7 @@ import {DialogsContainer} from "./components/dialogs/DialogsContainer";
 import {FriendsContainer} from "./components/friends/FriendsContainer";
 import {UsersContainer} from "./components/users/UsersContainer";
 import {ProfileContainer} from "./components/profile/ProfileContainer";
+import {HeaderContainer} from "./components/header/HeaderContainer";
 
 const App = () => {
     //Страницы которые мы организовываем с помощью Route переключаются между собой с помощью URL браузера.
@@ -26,7 +27,9 @@ const App = () => {
     // это уничтожает.
     return (
             <div className="app-wrapper">
-                <Header/>
+                <HeaderContainer
+
+                />
                 <div>
                     <Navigation/>
                     <div className={st.navBlock}>
@@ -36,7 +39,7 @@ const App = () => {
                     </div>
                 </div>
                 <div className="app-wrapper-content">
-                    <Route path="/profile" render={() =>
+                    <Route path="/profile/:userId?" render={() =>
                         <ProfileContainer
 
                         />}/>

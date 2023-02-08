@@ -5,9 +5,9 @@ import {DataUserType} from "../components/profile/ProfileContainer";
 
 export type addPostAT = ReturnType<typeof addPostAC>
 export type NewPostTextMessageAT = ReturnType<typeof NewPostTextMessageAC>
-export type setUserFullNameAT = ReturnType<typeof setDataUser>
+export type setDataUserAT = ReturnType<typeof setDataUser>
 
-export type ActionTypes = addPostAT | NewPostTextMessageAT | setUserFullNameAT
+export type ActionTypes = addPostAT | NewPostTextMessageAT | setDataUserAT
 
 let initialState = {
     dataUser: {} as DataUserType,
@@ -22,7 +22,7 @@ let initialState = {
 
 export type InitialProfilePageType = typeof initialState
 
-export const ProfileReducer = (state: InitialProfilePageType = initialState, action: ActionTypes): InitialProfilePageType => {
+const ProfileReducer = (state: InitialProfilePageType = initialState, action: ActionTypes): InitialProfilePageType => {
     switch (action.type) {
         case 'ADD-POST':
             const newPost: PostType = {

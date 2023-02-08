@@ -1,15 +1,44 @@
 .topHeader {
     grid-area: h;
     background-color: rgba(220, 220, 220, 0.22);
+    width: 100%;
 }
-.topHeader img {
-    padding-left:  16%;
+.container {
+    display: flex;
+    align-items: center;
+}
+.container img {
+    padding-left:  16px;
     width: 80px;
 }
 .logo {
+    width: 38%;
     display: flex;
+    justify-content: flex-end;
 }
 .itemHeader {
     color: #092c4f;
     padding-left: 4px;
+}
+
+.blockLogin {
+    width: 58%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.blockLogin a {
+    color: #14729b;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: ease-in-out 200ms;
+}
+
+.blockLogin a:hover {
+    color: rgba(43, 168, 124, 0.78);
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: ease-in-out 200ms;
 }
