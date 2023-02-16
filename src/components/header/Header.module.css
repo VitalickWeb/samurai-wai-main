@@ -4,15 +4,15 @@
     width: 100%;
 }
 .container {
+    width: 100%;
     display: flex;
     align-items: center;
 }
 .container img {
-    padding-left:  16px;
     width: 80px;
 }
 .logo {
-    width: 38%;
+    width: 50%;
     display: flex;
     justify-content: flex-end;
 }
@@ -22,7 +22,7 @@
 }
 
 .blockLogin {
-    width: 58%;
+    width: 40%;
     display: flex;
     justify-content: flex-end;
 }
@@ -41,4 +41,13 @@
     text-decoration: none;
     font-weight: 500;
     transition: ease-in-out 200ms;
+}
+.photoSmall {
+    margin-left: 5px;
+}
+
+.photoSmall img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
 }

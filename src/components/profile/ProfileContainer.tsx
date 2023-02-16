@@ -42,6 +42,7 @@ export class ProfileClassContainer extends React.Component<RouteComponentProps<{
         if (!userId) {
             userId = '2'
         }
+
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then(response => {
             this.props.setDataUser(response.data)
         })

@@ -3,8 +3,8 @@ import {PostType} from "../components/profile/myPosts/MyPostContainer";
 import {DataUserType} from "../components/profile/ProfileContainer";
 
 
-export type addPostAT = ReturnType<typeof addPostAC>
-export type NewPostTextMessageAT = ReturnType<typeof NewPostTextMessageAC>
+type addPostAT = ReturnType<typeof addPostAC>
+type NewPostTextMessageAT = ReturnType<typeof NewPostTextMessageAC>
 export type setDataUserAT = ReturnType<typeof setDataUser>
 
 export type ActionTypes = addPostAT | NewPostTextMessageAT | setDataUserAT

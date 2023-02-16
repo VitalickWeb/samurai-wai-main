@@ -50,7 +50,9 @@ class UsersClassContainer extends React.Component<UsersPageType> {//идет в�
     componentDidMount() {//в этом методе только можно делать сайд эффекты
         this.props.toggleIsFetching(true)//вызываем функцию из mapDispatchToProps, сработает при перезагрузке страницы
             //запрос пошел
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+            withCredentials: true
+        }).then(response => {
             this.props.toggleIsFetching(false)// когда пришел ответ, запрос прекратился
             this.props.setUsers(response.data.items)//Происходит вызов users
             this.props.setTotalCount(response.data.totalCount)//отображение сколько страниц в пагинации
@@ -79,7 +81,9 @@ class UsersClassContainer extends React.Component<UsersPageType> {//идет в�
     onChangePage = (pageNumber: number) => {//в параметры приходит объект события, обработчиком события является стрелочная функция по выбору страницы
         this.props.toggleIsFetching(true)//отображается preloader при ожидании отображении страницы
         this.props.setCurrentPage(pageNumber)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {
+            withCredentials: true
+        }).then(response => {
             this.props.toggleIsFetching(false)//прекращает отображаться preloader при загрузке страницы.
             this.props.setUsers(response.data.items)
         })

@@ -16,6 +16,8 @@ let rootReducer = combineReducers({//объединяем три reducers. Че�
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
 export let store = legacy_createStore(rootReducer);
+//@ts-ignore
+window.store = store
 //создаем store с помощью функции legacy_createStore
 //которому нужны редьюсеры, чтобы преобразовывать работы со state через специальную функцию combineReducers
 //после того как закомбайним редьюсеры мы отдаем переменную reducers стору

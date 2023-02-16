@@ -25,7 +25,6 @@ export const rerenderEntireTree = (state: AppRootStateType) => {//вызывае
         document.getElementById('root')
     );
 }
-
 rerenderEntireTree(store.getState())//когда мы узнаем что стэйт изменился, нам нужно у стора запросить этот стэйт заново
 
 // store.subscribe(() => {

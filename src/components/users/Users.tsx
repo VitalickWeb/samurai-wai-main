@@ -3,6 +3,8 @@ import {UserType} from './UsersContainer';
 import st from './Users.module.css'
 import avatarPhoto from '../../assets/images/Default-users/avatar.png'
 import {NavLink} from "react-router-dom";
+import axios from "axios";
+
 
 //import * as axios from "axios";
 //* as означает - импортируй все, что там экспортируется под общим названием axios - то есть все упаковываем в один объект,
@@ -36,11 +38,29 @@ export const Users = (props: UsersPropsType) => {
 
     let usersRender = props.users.map((u: UserType) => {
         const onClickFollow = () => {
-            props.follow(u.id)
+            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                withCredentials: true, //post принимает третий параметр в котором сидят настройки запроса
+                headers: {
+                    'API-KEY': '0a3cb18e-ae79-49b7-931f-829fd61734a7'
+                }
+            }).then(response => {
+                if (response.data.resultCode === 0) {
+                    props.follow(u.id)
+                }
+            })
         }
 
         const onClickUnFollow = () => {
-            props.unFollow(u.id)
+            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                withCredentials: true, //delete принимает второй параметр в котором сидят настройки запроса
+                headers: {
+                    'API-KEY': '0a3cb18e-ae79-49b7-931f-829fd61734a7'
+                }
+            }).then(response => {
+                if (response.data.resultCode === 0) {
+                    props.unFollow(u.id)
+                }
+            })
         }
 
         return (

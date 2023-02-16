@@ -14,9 +14,7 @@ export const ProfileInfo = ({dataUser}: ProfileInfoPropsType) => {
 
     return (
         <>
-            <div className={st.image}>
-
-            </div>
+            <div className={st.image}> </div>
             <div className={st.avaDesc}>
                 <img src={dataUser.photos.large} alt=""/>
                 <div><span>Full Name: </span>{dataUser.fullName}</div>
