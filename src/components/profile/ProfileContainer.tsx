@@ -1,10 +1,10 @@
 import React from 'react';
-import axios from "axios";
 import {setDataUser} from "../../redux/Profile-reducer";
 import {AppRootStateType} from "../../redux/Redux-store";
 import {connect} from "react-redux";
 import {Profile} from "./Profile";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import {profileAPI} from "../../api/api";
 
 export type DataUserType = {
     aboutMe: string
@@ -35,16 +35,17 @@ export type MapDispatchToProps = {
     setDataUser: (dataUser: DataUserType) => void
 }
 
-export class ProfileClassContainer extends React.Component<RouteComponentProps<{userId: string}> & ProfilePageType, AppRootStateType>{
+export class ProfileClassContainer extends React.Component
+    <RouteComponentProps<{userId: number}> & ProfilePageType, AppRootStateType>{
 
     componentDidMount() {//только в этом методе можно делать сайд эффекты
         let userId = this.props.match.params.userId //достаем данные из того что приходит нам в параметрах profile
         if (!userId) {
-            userId = '2'
+            userId = 2
         }
 
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then(response => {
-            this.props.setDataUser(response.data)
+        profileAPI.getProfile(userId).then(data => {
+            this.props.setDataUser(data)
         })
     }
 

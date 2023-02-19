@@ -3,13 +3,13 @@ import {Header} from "./Header";
 import {connect} from "react-redux";
 import {setAuthUserData, setDataUserProfile} from "../../redux/auth-reducer";
 import {AppRootStateType} from "../../redux/Redux-store";
-import axios from "axios";
 import {DataUserType} from "../profile/ProfileContainer";
+import {headerAPI, profileAPI} from "../../api/api";
 
 export type AuthDataType = {
-    id: number | null,
-    email: string | null,
-    login: string | null,
+    id: number
+    email: string
+    login: string
 }
 export type MapStateToProps = {
     data: AuthDataType
@@ -24,16 +24,13 @@ export type MapDispatchToProps = {
 class HeaderClassContainer extends React.Component<AuthType, AppRootStateType> {
 
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-           withCredentials: true //второй параметр в котором сидят настройки запроса
-        }).then(response => {
+        headerAPI.getHeader().then(response => {
             if (response.data.resultCode === 0) {
-
-                let data: AuthDataType = response.data.data //деструктуировали что бы не доставать по одному свойству.
+                let data: AuthDataType = response.data.data
                 this.props.setAuthUserData(data)
-                axios.get(`https://social-network.samuraijs.com/api/1.0/profile/ ${data.id}`).then(response => {
-                    // debugger
-                    this.props.setDataUserProfile(response.data)
+
+                profileAPI.getProfile(data.id).then(data => {
+                    this.props.setDataUserProfile(data)
                 })
             }
         })

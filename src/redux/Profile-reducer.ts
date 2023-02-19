@@ -36,7 +36,7 @@ const ProfileReducer = (state: InitialProfilePageType = initialState, action: Ac
                 newPostText: '',
             }
             //вместо callSubscriber() преобразователя, преобразования будут делать state и action в параметрах функции
-            //в место инструкции break используем return так как return не даст провалиться кейсу
+            //вместо инструкции break используем return так как return не даст провалиться кейсу
         case 'NEW-POST-TEXT-MESSAGE':
             return {
                 ...state,
@@ -50,7 +50,7 @@ const ProfileReducer = (state: InitialProfilePageType = initialState, action: Ac
 
         default://если придет в ProfileReducer action тип которого не будет в параметрах, то вернем state по умолчанию
             return state;
-    };
+    }
 };
 
 //ActionCreator это функция, которая нам возвращает action - правильный объект, с указанным типом AddPostActionType.

@@ -1,17 +1,11 @@
 import React from 'react';
 import {AppRootStateType} from "../../redux/Redux-store";
 import {connect} from "react-redux";
-import {
-    follow,
-    unFollow,
-    setCurrentPage,
-    setTotalCount,
-    setUsers,
-    toggleIsFetching,
-} from "../../redux/Users-reducer";
+import {follow, setCurrentPage, setTotalCount, setUsers, toggleIsFetching, unFollow,} from "../../redux/Users-reducer";
 import {Users} from "./Users";
-import axios from "axios";
 import {Preloader} from "../../common/preloader/Preloader";
+import {usersAPI} from "../../api/api";
+
 
 export type UserType = {
     id: string
@@ -49,13 +43,13 @@ export type MapDispatchToProps = {
 class UsersClassContainer extends React.Component<UsersPageType> {//идет вызов классовой компоненты
     componentDidMount() {//в этом методе только можно делать сайд эффекты
         this.props.toggleIsFetching(true)//вызываем функцию из mapDispatchToProps, сработает при перезагрузке страницы
-            //запрос пошел
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-            withCredentials: true
-        }).then(response => {
+
+        //запрос пошел, вызываем функцию дай мне пользователей, когда пользователи придут
+        //продолжим в then обрабатывать ответ.
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then((data) => {
             this.props.toggleIsFetching(false)// когда пришел ответ, запрос прекратился
-            this.props.setUsers(response.data.items)//Происходит вызов users
-            this.props.setTotalCount(response.data.totalCount)//отображение сколько страниц в пагинации
+            this.props.setUsers(data.items)//Происходит вызов users
+            this.props.setTotalCount(data.totalCount)//отображение сколько страниц в пагинации
         })
     }
 
@@ -81,11 +75,10 @@ class UsersClassContainer extends React.Component<UsersPageType> {//идет в�
     onChangePage = (pageNumber: number) => {//в параметры приходит объект события, обработчиком события является стрелочная функция по выбору страницы
         this.props.toggleIsFetching(true)//отображается preloader при ожидании отображении страницы
         this.props.setCurrentPage(pageNumber)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {
-            withCredentials: true
-        }).then(response => {
+
+        usersAPI.getUsers(pageNumber, this.props.pageSize).then((data) => {
             this.props.toggleIsFetching(false)//прекращает отображаться preloader при загрузке страницы.
-            this.props.setUsers(response.data.items)
+            this.props.setUsers(data.items)
         })
     }
 
