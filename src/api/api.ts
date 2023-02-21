@@ -1,6 +1,4 @@
 import axios from "axios";
-import {DataUserType} from "../components/profile/ProfileContainer";
-import {AuthDataType} from "../components/header/HeaderContainer";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',//базовый url будет автоматически приклеиваться к строке

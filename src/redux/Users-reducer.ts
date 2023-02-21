@@ -1,12 +1,12 @@
 import {UserType} from "../components/users/UsersContainer";
 
-
 const initialState = {
     users: [] as Array<UserType>,
     pageSize: 80,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingInProgress: [''],//когда идет добавление айди закидываем в массив
 };
 export type InitialUsersPageType = typeof initialState
 
@@ -16,14 +16,21 @@ type setUsersAT = ReturnType<typeof setUsers>
 type setCurrentPageAT = ReturnType<typeof setCurrentPage>
 type setTotalCountAT = ReturnType<typeof setTotalCount>
 type toggleIsFetchingAT = ReturnType<typeof toggleIsFetching>
+type toggleFollowingProgressAT = ReturnType<typeof toggleFollowingProgress>
 
-export type ActionsTypes = followAT | unFollowAT | setUsersAT | setCurrentPageAT | setTotalCountAT |
-    toggleIsFetchingAT
+export type ActionsTypes = followAT |
+    unFollowAT |
+    setUsersAT |
+    setCurrentPageAT |
+    setTotalCountAT |
+    toggleIsFetchingAT |
+    toggleFollowingProgressAT
 
 //action нужны reducers - редьюсер будет анализировать этот action и что-то изменять
 //reducer принимает старый state и action и меняется этот state на основании action.
 
 export const usersReducer = (state: InitialUsersPageType = initialState, action: ActionsTypes): InitialUsersPageType => {
+    console.log(state)
     switch (action.type) {
         case 'FALLOWED-FRIEND':
             return {...state, users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)}
@@ -44,6 +51,14 @@ export const usersReducer = (state: InitialUsersPageType = initialState, action:
 
         case 'TOGGLE-PRELOADER':
             return {...state, isFetching: action.isFetching}
+
+        case 'TOGGLE-IS-FOLLOWING-PROGRESS':
+            return {
+                ...state,//если в action приходит фолс, то фоловинг завершился и из массива нужно будет удалить айли
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId)
+            }
 
         default:
             return state
@@ -85,7 +100,13 @@ export const toggleIsFetching = (load: boolean) => {
         isFetching: load
     } as const
 }
-
+export const toggleFollowingProgress = (isFetching: boolean, userId: string) => {
+    return {
+        type: 'TOGGLE-IS-FOLLOWING-PROGRESS',
+        isFetching,
+        userId
+    } as const
+}
 export default usersReducer
 
 //Берем реальное значение пользователей во вкладке Network Preview при первом запросе Users?Page=2&Count=5

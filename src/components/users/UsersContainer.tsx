@@ -1,7 +1,15 @@
 import React from 'react';
 import {AppRootStateType} from "../../redux/Redux-store";
 import {connect} from "react-redux";
-import {follow, setCurrentPage, setTotalCount, setUsers, toggleIsFetching, unFollow,} from "../../redux/Users-reducer";
+import {
+    follow,
+    setCurrentPage,
+    setTotalCount,
+    setUsers,
+    toggleFollowingProgress,
+    toggleIsFetching,
+    unFollow,
+} from "../../redux/Users-reducer";
 import {Users} from "./Users";
 import {Preloader} from "../../common/preloader/Preloader";
 import {usersAPI} from "../../api/api";
@@ -29,6 +37,7 @@ export type MapStateToProps = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: []
 }
 export type MapDispatchToProps = {
     follow: (userId: string) => void
@@ -37,6 +46,7 @@ export type MapDispatchToProps = {
     setCurrentPage: (currentPage: number) => void//идет передача параметра и типизации колбэка 5
     setTotalCount: (totalCount: number) => void
     toggleIsFetching: (load: boolean) => void
+    toggleFollowingProgress: (isFetching: boolean, userId: string) => void
 }
 
 
@@ -96,6 +106,8 @@ class UsersClassContainer extends React.Component<UsersPageType> {//идет в�
                     follow={this.props.follow}
                     unFollow={this.props.unFollow}
                     onChangePage={this.onChangePage}
+                    toggleFollowingProgress={this.props.toggleFollowingProgress}
+                    followingInProgress={this.props.followingInProgress}
                 />
                 {/*через атрибут передаем вызов функции в стрелочную функцию onChangePage 3*/}
             </>
@@ -113,8 +125,9 @@ let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
-    }
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
+    } as MapStateToProps
 }
 // let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {
 //     return {
@@ -142,6 +155,6 @@ let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
 //Рефакторинг mapDispatchToProps вторым параметром сразу вызываем AC в объекте сократив много кода
 export const UsersContainer = connect(mapStateToProps,
     {
-        follow, unFollow, setUsers, setCurrentPage, setTotalCount, toggleIsFetching
+        follow, unFollow, setUsers, setCurrentPage, setTotalCount, toggleIsFetching, toggleFollowingProgress
     })(UsersClassContainer)
 //классовая компонента UsersClassContainer вызывается контейнерной компонентой UsersContainer

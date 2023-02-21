@@ -24,6 +24,8 @@ export type UsersPropsType = {
     follow: (user: string) => void
     unFollow: (user: string) => void
     onChangePage: (pageNumber: number) => void//передали на верх параметр и типизацию через колбэк 2
+    toggleFollowingProgress: (isFetching: boolean, userId: string) => void
+    followingInProgress: []
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -38,30 +40,34 @@ export const Users = (props: UsersPropsType) => {
 
     let usersRender = props.users.map((u: UserType) => {
         const onClickFollow = () => {
+            props.toggleFollowingProgress(true, u.id)
             followAPI.postFallow(u.id).then(data => {
                 if (data.resultCode === 0) {
                     props.follow(u.id)
                 }
+                props.toggleFollowingProgress(false, u.id)
             })
         }
 
         const onClickUnFollow = () => {
+            props.toggleFollowingProgress(true, u.id)
             unFollowAPI.deleteFallow(u.id).then(data => {
                 if (data.resultCode === 0) {
                     props.unFollow(u.id)
                 }
+                props.toggleFollowingProgress(false, u.id)
             })
         }
 
         return (
             <div key={u.id}>
                 <NavLink to={"/profile/" + u.id}>
-                    <img className={st.photoUser} src={u.photos.small !== null ? u.photos.small : avatarPhoto}/>
+                    <img className={st.photoUser} src={u.photos.small !== null ? u.photos.small : avatarPhoto} alt=""/>
                 </NavLink>
                 <div className={st.boxButton}>
                     {!u.followed
-                        ? <button className={st.buttonFollow} onClick={onClickFollow}>UnFollow</button>
-                        : <button className={st.buttonUnFollow} onClick={onClickUnFollow}>Follow</button>}
+                        ? <button disabled={props.followingInProgress.some(id => id === u.id)} className={st.buttonFollow} onClick={onClickFollow}>UnFollow</button>
+                        : <button disabled={props.followingInProgress.some(id => id === u.id)} className={st.buttonUnFollow} onClick={onClickUnFollow}>Follow</button>}
                 </div>
                 <div className={st.infoUser}>
                     {u.name} {u.status} {"u.location.country"} {"u.location.city"}
