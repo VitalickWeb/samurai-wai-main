@@ -1,10 +1,9 @@
 import React from 'react';
 import {Header} from "./Header";
 import {connect} from "react-redux";
-import {setAuthUserData, setDataUserProfile} from "../../redux/auth-reducer";
+import {getHeaderAndProfileId, setDataUserProfile} from "../../redux/auth-reducer";
 import {AppRootStateType} from "../../redux/Redux-store";
 import {DataUserType} from "../profile/ProfileContainer";
-import {headerAPI, profileAPI} from "../../api/api";
 
 export type AuthDataType = {
     id: number
@@ -18,22 +17,23 @@ export type MapStateToProps = {
 }
 
 export type MapDispatchToProps = {
-    setAuthUserData: (data: AuthDataType) => void
     setDataUserProfile: (dataUser: DataUserType) => void
+    getHeaderAndProfileId: (data: AuthDataType) => void
 }
 class HeaderClassContainer extends React.Component<AuthType, AppRootStateType> {
 
     componentDidMount() {
-        headerAPI.getHeader().then(response => {
-            if (response.data.resultCode === 0) {
-                let data: AuthDataType = response.data.data
-                this.props.setAuthUserData(data)
-
-                profileAPI.getProfile(data.id).then(data => {
-                    this.props.setDataUserProfile(data)
-                })
-            }
-        })
+        this.props.getHeaderAndProfileId(this.props.data)
+        // headerAPI.getHeader().then(response => {
+        //     if (response.data.resultCode === 0) {
+        //         let data: AuthDataType = response.data.data
+        //         this.props.setAuthUserData(data)
+        //
+        //         profileAPI.getProfile(data.id).then(data => {
+        //             this.props.setDataUserProfile(data)
+        //         })
+        //     }
+        // })
     }
 
     render() {
@@ -62,6 +62,6 @@ let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
 }
 
 export const HeaderContainer = connect<MapStateToProps, MapDispatchToProps, {}, AppRootStateType>( mapStateToProps, {
-    setAuthUserData, setDataUserProfile
+    setDataUserProfile, getHeaderAndProfileId
 } )(HeaderClassContainer)
 

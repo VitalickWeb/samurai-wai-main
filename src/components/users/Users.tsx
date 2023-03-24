@@ -3,7 +3,6 @@ import {UserType} from './UsersContainer';
 import st from './Users.module.css'
 import avatarPhoto from '../../assets/images/Default-users/avatar.png'
 import {NavLink} from "react-router-dom";
-import {followAPI, unFollowAPI} from "../../api/api";
 
 
 //import * as axios from "axios";
@@ -21,10 +20,10 @@ export type UsersPropsType = {
     pageSize: number
     currentPage: number
     users: Array<UserType>
-    follow: (user: string) => void
-    unFollow: (user: string) => void
+    follow: (userId: string) => void
+    unFollow: (userId: string) => void
     onChangePage: (pageNumber: number) => void//передали на верх параметр и типизацию через колбэк 2
-    toggleFollowingProgress: (isFetching: boolean, userId: string) => void
+   // toggleFollowingProgress: (isFetching: boolean, userId: string) => void
     followingInProgress: []
 }
 
@@ -40,23 +39,25 @@ export const Users = (props: UsersPropsType) => {
 
     let usersRender = props.users.map((u: UserType) => {
         const onClickFollow = () => {
-            props.toggleFollowingProgress(true, u.id)
-            followAPI.postFallow(u.id).then(data => {
-                if (data.resultCode === 0) {
-                    props.follow(u.id)
-                }
-                props.toggleFollowingProgress(false, u.id)
-            })
+            props.follow(u.id)
+            // props.toggleFollowingProgress(true, u.id)
+            // followAPI.postFallow(u.id).then(data => {
+            //     if (data.resultCode === 0) {
+            //         props.follow(u.id)
+            //     }
+            //     props.toggleFollowingProgress(false, u.id)
+            // })
         }
 
         const onClickUnFollow = () => {
-            props.toggleFollowingProgress(true, u.id)
-            unFollowAPI.deleteFallow(u.id).then(data => {
-                if (data.resultCode === 0) {
-                    props.unFollow(u.id)
-                }
-                props.toggleFollowingProgress(false, u.id)
-            })
+            props.unFollow(u.id)
+            // props.toggleFollowingProgress(true, u.id)//перед асинхронным запросом дспатчим true
+            // unFollowAPI.deleteFallow(u.id).then(data => {
+            //     if (data.resultCode === 0) {
+            //         props.unFollow(u.id)
+            //     }
+            //     props.toggleFollowingProgress(false, u.id)//после окончания асинхронного запроса диспатчим false
+            // })
         }
 
         return (

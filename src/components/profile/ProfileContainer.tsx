@@ -1,10 +1,9 @@
 import React from 'react';
-import {setDataUser} from "../../redux/Profile-reducer";
 import {AppRootStateType} from "../../redux/Redux-store";
 import {connect} from "react-redux";
 import {Profile} from "./Profile";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {profileAPI} from "../../api/api";
+import {getUserProfile} from "../../redux/Profile-reducer";
 
 export type DataUserType = {
     aboutMe: string
@@ -32,7 +31,7 @@ export type MapStateToProps = {
 }
 
 export type MapDispatchToProps = {
-    setDataUser: (dataUser: DataUserType) => void
+    getUserProfile: (userId: number) => void
 }
 
 export class ProfileClassContainer extends React.Component
@@ -43,10 +42,10 @@ export class ProfileClassContainer extends React.Component
         if (!userId) {
             userId = 2
         }
-
-        profileAPI.getProfile(userId).then(data => {
-            this.props.setDataUser(data)
-        })
+        this.props.getUserProfile(userId)
+        // profileAPI.getProfile(userId).then(data => {
+        //     this.props.setDataUser(data)
+        // })
     }
 
     render() {
@@ -75,5 +74,5 @@ let withUrlDataContainerComponent = withRouter(ProfileClassContainer)//обво�
 //Рефакторинг mapDispatchToProps вторым параметром сразу вызываем AC в объекте сократив много кода
 export const ProfileContainer = connect<MapStateToProps, MapDispatchToProps, {}, AppRootStateType>(mapStateToProps,
     {
-        setDataUser
+        getUserProfile
     })(withUrlDataContainerComponent)

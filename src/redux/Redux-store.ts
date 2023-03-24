@@ -1,9 +1,10 @@
-import {combineReducers, legacy_createStore} from "redux";
+import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
 import ProfileReducer from "./Profile-reducer";
 import DialogReducer from "./Dialog-reducer";
 import SidebarReducer from "./Sidebar-reducer";
 import usersReducer from "./Users-reducer";
 import authReducer from "./auth-reducer";
+import thunkMiddleWare from "redux-thunk"
 
 let rootReducer = combineReducers({//объединяем три reducers. Через функцию combineReducers передаем объект внутри нее
     profilePage: ProfileReducer,//создали объект у которого есть свойство профайл редюсер и ключ значение является функция, которую мы определили
@@ -15,7 +16,8 @@ let rootReducer = combineReducers({//объединяем три reducers. Че�
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
-export let store = legacy_createStore(rootReducer);
+//thunkMiddleWare это промежуточный уровень который мы внедряем в наш store
+export let store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleWare));
 //@ts-ignore
 window.store = store
 //создаем store с помощью функции legacy_createStore

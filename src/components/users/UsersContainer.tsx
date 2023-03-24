@@ -1,18 +1,9 @@
 import React from 'react';
 import {AppRootStateType} from "../../redux/Redux-store";
 import {connect} from "react-redux";
-import {
-    follow,
-    setCurrentPage,
-    setTotalCount,
-    setUsers,
-    toggleFollowingProgress,
-    toggleIsFetching,
-    unFollow,
-} from "../../redux/Users-reducer";
+import {follow, getUsers, setCurrentPage, unFollow,} from "../../redux/Users-reducer";
 import {Users} from "./Users";
 import {Preloader} from "../../common/preloader/Preloader";
-import {usersAPI} from "../../api/api";
 
 
 export type UserType = {
@@ -42,25 +33,26 @@ export type MapStateToProps = {
 export type MapDispatchToProps = {
     follow: (userId: string) => void
     unFollow: (userId: string) => void
-    setUsers: (usersAdd: Array<UserType>) => void
+    getUsers: (currenPage:number, pageSize: number) => void
     setCurrentPage: (currentPage: number) => void//идет передача параметра и типизации колбэка 5
-    setTotalCount: (totalCount: number) => void
-    toggleIsFetching: (load: boolean) => void
-    toggleFollowingProgress: (isFetching: boolean, userId: string) => void
+    // toggleFollowingProgress: (isFetching: boolean, userId: string) => void
 }
 
 
 class UsersClassContainer extends React.Component<UsersPageType> {//идет вызов классовой компоненты
-    componentDidMount() {//в этом методе только можно делать сайд эффекты
-        this.props.toggleIsFetching(true)//вызываем функцию из mapDispatchToProps, сработает при перезагрузке страницы
 
-        //запрос пошел, вызываем функцию дай мне пользователей, когда пользователи придут
-        //продолжим в then обрабатывать ответ.
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then((data) => {
-            this.props.toggleIsFetching(false)// когда пришел ответ, запрос прекратился
-            this.props.setUsers(data.items)//Происходит вызов users
-            this.props.setTotalCount(data.totalCount)//отображение сколько страниц в пагинации
-        })
+    componentDidMount() {//в этом методе только можно делать сайд эффекты
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+
+        // this.props.toggleIsFetching(true)//вызываем функцию из mapDispatchToProps, сработает при перезагрузке страницы
+        //
+        // //запрос пошел, вызываем функцию дай мне пользователей, когда пользователи придут
+        // //продолжим в then обрабатывать ответ.
+        // usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then((data) => {
+        //     this.props.toggleIsFetching(false)// когда пришел ответ, запрос прекратился
+        //     this.props.setUsers(data.items)//Происходит вызов users
+        //     this.props.setTotalCount(data.totalCount)//отображение сколько страниц в пагинации
+        // })
     }
 
     // constructor(props: UsersPageType) {
@@ -83,13 +75,14 @@ class UsersClassContainer extends React.Component<UsersPageType> {//идет в�
     // }
 
     onChangePage = (pageNumber: number) => {//в параметры приходит объект события, обработчиком события является стрелочная функция по выбору страницы
-        this.props.toggleIsFetching(true)//отображается preloader при ожидании отображении страницы
-        this.props.setCurrentPage(pageNumber)
-
-        usersAPI.getUsers(pageNumber, this.props.pageSize).then((data) => {
-            this.props.toggleIsFetching(false)//прекращает отображаться preloader при загрузке страницы.
-            this.props.setUsers(data.items)
-        })
+        this.props.getUsers(pageNumber, this.props.pageSize)
+        // this.props.toggleIsFetching(true)//отображается preloader при ожидании отображении страницы
+        // this.props.setCurrentPage(pageNumber)
+        //
+        // usersAPI.getUsers(pageNumber, this.props.pageSize).then((data) => {
+        //     this.props.toggleIsFetching(false)//прекращает отображаться preloader при загрузке страницы.
+        //     this.props.setUsers(data.items)
+        // })
     }
 
     render() {//render(пропсы сюда не приходят)
@@ -106,7 +99,10 @@ class UsersClassContainer extends React.Component<UsersPageType> {//идет в�
                     follow={this.props.follow}
                     unFollow={this.props.unFollow}
                     onChangePage={this.onChangePage}
-                    toggleFollowingProgress={this.props.toggleFollowingProgress}
+                    // toggleFollowingProgress={this.props.toggleFollowingProgress}
+                    //не нужно передавать в компоненту toggleFollowingProgress, так как не мы извне делаем запрос,
+                    // а это происходит как часть бизнес процесса внутри BLL
+                    // получается что все работает через thunk
                     followingInProgress={this.props.followingInProgress}
                 />
                 {/*через атрибут передаем вызов функции в стрелочную функцию onChangePage 3*/}
@@ -155,6 +151,6 @@ let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
 //Рефакторинг mapDispatchToProps вторым параметром сразу вызываем AC в объекте сократив много кода
 export const UsersContainer = connect(mapStateToProps,
     {
-        follow, unFollow, setUsers, setCurrentPage, setTotalCount, toggleIsFetching, toggleFollowingProgress
+        follow, unFollow, setCurrentPage, getUsers
     })(UsersClassContainer)
 //классовая компонента UsersClassContainer вызывается контейнерной компонентой UsersContainer

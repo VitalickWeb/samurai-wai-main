@@ -1,6 +1,8 @@
 import {v1} from "uuid";
 import {PostType} from "../components/profile/myPosts/MyPostContainer";
 import {DataUserType} from "../components/profile/ProfileContainer";
+import {Dispatch} from "redux";
+import {profileAPI} from "../api/api";
 
 
 type addPostAT = ReturnType<typeof addPostAC>
@@ -72,6 +74,19 @@ export const setDataUser = (dataUser: DataUserType) => {
         type: 'SET-DATA-USER',
         dataUser
     } as const
+}
+
+
+
+//Thunk это функция которая внутри себя диспатчит обычные action
+export const getUserProfile = (userId: number) => {
+//ThunkCreator это функция которая может что то принимать и которая возвращает санку
+//Функция внутренняя которую возвращает внешняя функция, называется thunk
+    return (dispatch: Dispatch<ActionTypes>) => {
+        profileAPI.getProfile(userId).then(data => {
+            dispatch(setDataUser(data))
+        })
+    }
 }
 
 export default ProfileReducer;

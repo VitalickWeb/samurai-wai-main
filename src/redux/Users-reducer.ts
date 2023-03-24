@@ -1,4 +1,6 @@
 import {UserType} from "../components/users/UsersContainer";
+import {followAPI, unFollowAPI, usersAPI} from "../api/api";
+import {Dispatch} from "redux";
 
 const initialState = {
     users: [] as Array<UserType>,
@@ -6,12 +8,12 @@ const initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
-    followingInProgress: [''],//когда идет добавление айди закидываем в массив
+    followingInProgress: [''],//когда идет добавление [id] закидываем в массив, а при удалении юзера id[] удаляем из массива.
 };
 export type InitialUsersPageType = typeof initialState
 
-type followAT = ReturnType<typeof follow>
-type unFollowAT = ReturnType<typeof unFollow>
+type followAT = ReturnType<typeof followSuccess>
+type unFollowAT = ReturnType<typeof unFollowSuccess>
 type setUsersAT = ReturnType<typeof setUsers>
 type setCurrentPageAT = ReturnType<typeof setCurrentPage>
 type setTotalCountAT = ReturnType<typeof setTotalCount>
@@ -30,7 +32,6 @@ export type ActionsTypes = followAT |
 //reducer принимает старый state и action и меняется этот state на основании action.
 
 export const usersReducer = (state: InitialUsersPageType = initialState, action: ActionsTypes): InitialUsersPageType => {
-    console.log(state)
     switch (action.type) {
         case 'FALLOWED-FRIEND':
             return {...state, users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)}
@@ -41,7 +42,7 @@ export const usersReducer = (state: InitialUsersPageType = initialState, action:
         case 'SET-USERS':
             //откуда то придут пользователи, мы берм старый state, взять пользователей которые там были
             //и перезаписать пользователями, которые пришли к нам в action
-            return { ...state, users: action.usersAdd }//перезатираем старый массив пользователей новым
+            return {...state, users: action.usersAdd}//перезатираем старый массив пользователей новым
 
         case 'SET-CURRENT-PAGE':
             return {...state, currentPage: action.currentPage}
@@ -64,13 +65,13 @@ export const usersReducer = (state: InitialUsersPageType = initialState, action:
             return state
     }
 }
-export const follow = (userId: string) => {
+export const followSuccess = (userId: string) => {
     return {
         type: 'FALLOWED-FRIEND',
         userId
     } as const
 }
-export const unFollow = (userId: string) => {
+export const unFollowSuccess = (userId: string) => {
     return {
         type: 'UNFOLLOWED-FRIEND',
         userId
@@ -107,6 +108,51 @@ export const toggleFollowingProgress = (isFetching: boolean, userId: string) => 
         userId
     } as const
 }
+
+//Thunk это функция которая внутри себя диспатчит обычные action
+export const getUsers = (currentPage: number, pageSize: number) => {
+//ThunkCreator это функция которая может что то принимать и которая возвращает санку
+    return (dispatch: Dispatch<ActionsTypes>) => {
+    // return (dispatch: (type: setUsersAT | setTotalCountAT | toggleIsFetchingAT) => void) => {
+        dispatch(toggleIsFetching(true))//вызываем функцию из mapDispatchToProps, сработает при перезагрузке страницы
+        dispatch(setCurrentPage(currentPage))
+        //запрос пошел, вызываем функцию дай мне пользователей, когда пользователи придут
+        //продолжим в then обрабатывать ответ.
+        usersAPI.getUsers(currentPage, pageSize).then((data) => {
+            dispatch(toggleIsFetching(false))// когда пришел ответ, запрос прекратился
+            dispatch(setUsers(data.items))//Происходит вызов users
+            dispatch(setTotalCount(data.totalCount))//отображение сколько страниц в пагинации
+        })
+    }
+}
+
+
+export const follow = (userId: string) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
+        dispatch(toggleFollowingProgress(true, userId))
+        followAPI.postFallow(userId).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(followSuccess(userId))
+            }
+            dispatch(toggleFollowingProgress(false, userId))
+        })
+    }
+}
+
+export const unFollow = (userId: string) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
+        dispatch(toggleFollowingProgress(true, userId))//перед асинхронным запросом дспатчим true
+        unFollowAPI.deleteFallow(userId).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(unFollowSuccess(userId))
+            }
+            dispatch(toggleFollowingProgress(false, userId))//после окончания асинхронного запроса диспатчим false
+        })
+    }
+}
+
+
+
 export default usersReducer
 
 //Берем реальное значение пользователей во вкладке Network Preview при первом запросе Users?Page=2&Count=5

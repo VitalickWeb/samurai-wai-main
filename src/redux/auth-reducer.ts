@@ -1,5 +1,7 @@
 import {AuthDataType} from "../components/header/HeaderContainer";
 import {DataUserType} from "../components/profile/ProfileContainer";
+import {Dispatch} from "redux";
+import {headerAPI, profileAPI} from "../api/api";
 
 const initialState = {
     data: {} as AuthDataType,
@@ -45,5 +47,23 @@ export const setDataUserProfile = (dataUser: DataUserType) => {
         type: 'SET-DATA-USER-PROFILE',
         dataUser
     } as const
+}
+
+
+//Thunk это функция которая внутри себя диспатчит обычные action
+export const getHeaderAndProfileId = (data: AuthDataType) => {
+//ThunkCreator это функция которая может что то принимать и которая возвращает санку
+    return (dispatch: Dispatch<ActionsTypes>) => {
+        headerAPI.getHeader().then(response => {
+            if (response.data.resultCode === 0) {
+                let data: AuthDataType = response.data.data
+                dispatch(setAuthUserData(data))
+
+                profileAPI.getProfile(data.id).then(data => {
+                    dispatch(setDataUserProfile(data))
+                })
+            }
+        })
+    }
 }
 export default authReducer
