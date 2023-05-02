@@ -3,7 +3,9 @@ import {Dialogs} from "./Dialogs";
 import {AppRootStateType} from "../../redux/Redux-store";
 import {connect} from "react-redux";
 import {addDialogAC, newDialogTextMessageAC} from "../../redux/Dialog-reducer";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
+import {withRedirect} from "../../hocs/withRedirect";
+
 
 //Контейнерная компонента, которая через себя передает в store
 //все что не может передавать презентационная компонента. Так же имеет право быть
@@ -19,6 +21,8 @@ export type DialogsMessagesType = {
     id: string
     message: string
 }
+
+
 export type MapStateToProps = {
     newDialogText: string
     dataUsers: Array<UsersType>
@@ -34,14 +38,21 @@ export type DialogMapStatePropsType = ReturnType<typeof mapStateToProps>
 export type DialogMapDispatchPropsType = ReturnType<typeof mapDispatchToProps>
 export type DialogPropsTypes = DialogMapStatePropsType & DialogMapDispatchPropsType
 
-let mapStateToProps = (state: AppRootStateType): MapStateToProps => {//превращаем часть state в props
+
+let mapStateToPropsRedirectComponent = (state: AppRootStateType): { isAuth: boolean } => {
     return  {
+        isAuth: state.auth.isAuth
+    }
+}
+
+let mapStateToProps = (state: AppRootStateType): MapStateToProps => {//из 2ух объектов превращаем часть state в props
+    return {
         newDialogText: state.dialogPage.newDialogText,
         dataUsers: state.dialogPage.dataUsers,
         dataMessage: state.dialogPage.dataMessage,
     }
 }
-let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {
+let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {//из 2ух объектов превращаем часть state в props
     return  {
         addDialog: (newDialogText: string) => {
             dispatch(addDialogAC(newDialogText))
@@ -52,7 +63,18 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {
     }
 }
 
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withRedirect
+)(Dialogs)
+
+
+// let WithAuthRedirectComponent = withRedirect(Dialogs)
+//
+// WithAuthRedirectComponent = connect(mapStateToPropsRedirectComponent)(WithAuthRedirectComponent)
+//
+// export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(WithAuthRedirectComponent);
+
 //Работа функции connect()() - 1)она создает контейнерную компоненту, 2)внутри этой контейнерной компоненты она
 // рендерит презентационную компоненту, 3)внутрь презентационной компоненты в качестве props передает те свойства которые сидят
 //в объектах f1, f2. Если в этих объектах нет ни каких свойств, значит внутри Dialogs не будет ни каких пропсов

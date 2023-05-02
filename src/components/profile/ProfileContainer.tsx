@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 import {Profile} from "./Profile";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {getUserProfile} from "../../redux/Profile-reducer";
+import {withRedirect} from "../../hocs/withRedirect";
+import {compose} from "redux";
 
 export type DataUserType = {
     aboutMe: string
@@ -60,6 +62,12 @@ export class ProfileClassContainer extends React.Component
     }
 };
 
+let mapStateIsAuthRedirectComponent = (state: AppRootStateType): {isAuth: boolean} => {
+    return {
+        isAuth: state.auth.isAuth
+    }
+}
+
 export type ProfilePageType = MapStateToProps & MapDispatchToProps & {}
 
 let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
@@ -68,11 +76,23 @@ let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
     }
 }
 
-let withUrlDataContainerComponent = withRouter(ProfileClassContainer)//обволакиваем третий раз в контейнерную компоненту
-// для того что бы прокинуть в нашу конечную компоненту данные из URL
-
-//Рефакторинг mapDispatchToProps вторым параметром сразу вызываем AC в объекте сократив много кода
-export const ProfileContainer = connect<MapStateToProps, MapDispatchToProps, {}, AppRootStateType>(mapStateToProps,
-    {
+//что значит 2 вызова, вызывается та функция, которую вернул нам первый вызов функции compose
+//compose вернул нам функцию и мы ее вызываем, ту функцию, которую вернул compose
+export default compose(
+    connect<MapStateToProps, MapDispatchToProps, {}, AppRootStateType>(mapStateToProps, {
         getUserProfile
-    })(withUrlDataContainerComponent)
+    }),
+    withRouter,
+    withRedirect
+)(ProfileClassContainer)
+
+//обволакиваем третий раз в контейнерную компоненту для того что бы прокинуть в нашу конечную компоненту данные из URL
+// let withUrlDataContainerComponent = withRouter(ProfileClassContainer)
+//
+// let withAuthRedirectComponent = withRedirect(withUrlDataContainerComponent)
+//
+// withAuthRedirectComponent = connect(mapStateIsAuthRedirectComponent)(withAuthRedirectComponent)
+//
+// //Рефакторинг mapDispatchToProps вторым параметром сразу вызываем AC в объекте сократив много кода
+// export const ProfileContainer = connect<MapStateToProps, MapDispatchToProps, {}, AppRootStateType>(mapStateToProps,
+//     {getUserProfile})(withAuthRedirectComponent)

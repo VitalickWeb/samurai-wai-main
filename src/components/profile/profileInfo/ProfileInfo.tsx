@@ -2,6 +2,7 @@ import React from "react";
 import st from './ProfileInfo.module.css';
 import {Preloader} from "../../../common/preloader/Preloader";
 import {DataUserType} from "../ProfileContainer";
+import profileAva from '../../../assets/images/profile-avatar/Default-avatar.jpg'
 
 export type ProfileInfoPropsType = {
     dataUser: DataUserType
@@ -16,8 +17,10 @@ export const ProfileInfo = ({dataUser}: ProfileInfoPropsType) => {
         <>
             <div className={st.image}> </div>
             <div className={st.avaDesc}>
-                <img src={dataUser.photos.large} alt=""/>
-                <div><span>Full Name: </span>{dataUser.fullName}</div>
+                {dataUser.photos.large
+                    ? <img src={dataUser.photos.large} alt="ava"/>
+                    : <img src={profileAva} alt="plug"/>}
+                    <div><span>Full Name: </span>{dataUser.fullName}</div>
                 Looking for a job status: {!dataUser.lookingForAJob
                 ? <img className={st.imageJob} src="https://i.ytimg.com/vi/yF_2L6UN81E/maxresdefault.jpg" alt=""/>
                 : <img className={st.imageFindJob}
