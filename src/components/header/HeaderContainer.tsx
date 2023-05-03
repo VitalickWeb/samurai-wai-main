@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 import {getHeaderAndProfileId, setDataUserProfile} from "../../redux/auth-reducer";
 import {AppRootStateType} from "../../redux/Redux-store";
 import {DataUserType} from "../profile/ProfileContainer";
+import {compose} from "redux";
+import {withRedirect} from "../../hocs/withRedirect";
 
 export type AuthDataType = {
     id: number
@@ -53,6 +55,12 @@ class HeaderClassContainer extends React.Component<AuthType, AppRootStateType> {
 
 export type AuthType = MapStateToProps & MapDispatchToProps & {}
 
+// let mapStateIsAuthRedirectComponent = (state: AppRootStateType): {isAuth: boolean} => {
+//     return {
+//         isAuth: state.auth.isAuth
+//     }
+// }
+
 let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
     return {
         data: state.auth.data,
@@ -60,6 +68,13 @@ let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
         dataUser: state.auth.dataUser,
     }
 }
+
+// export default compose<React.ComponentType>(
+//     connect<MapStateToProps, MapDispatchToProps, {}, AppRootStateType>( mapStateToProps, {
+//         setDataUserProfile, getHeaderAndProfileId
+//     } ),
+//     withRedirect
+// )(HeaderClassContainer)
 
 export const HeaderContainer = connect<MapStateToProps, MapDispatchToProps, {}, AppRootStateType>( mapStateToProps, {
     setDataUserProfile, getHeaderAndProfileId

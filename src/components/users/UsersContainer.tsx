@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 import {follow, getUsers, setCurrentPage, unFollow,} from "../../redux/Users-reducer";
 import {Users} from "./Users";
 import {Preloader} from "../../common/preloader/Preloader";
+import {compose} from "redux";
+import {withRedirect} from "../../hocs/withRedirect";
 
 
 export type UserType = {
@@ -111,8 +113,14 @@ class UsersClassContainer extends React.Component<UsersPageType> {//идет в�
     }
 }
 
-export type UsersMapStatePropsType = MapStateToProps
-export type UsersMapDispatchPropsType = MapDispatchToProps
+let mapStateIsAuthRedirectComponent = (state: AppRootStateType): {isAuth: boolean} => {
+    return {
+        isAuth: state.auth.isAuth
+    }
+}
+
+type UsersMapStatePropsType = MapStateToProps
+type UsersMapDispatchPropsType = MapDispatchToProps
 export type UsersPageType = UsersMapStatePropsType & UsersMapDispatchPropsType
 
 let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
@@ -148,9 +156,17 @@ let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
 //     }
 // }
 
+export default compose<React.ComponentType>(
+    connect(mapStateToProps,
+        {
+            follow, unFollow, setCurrentPage, getUsers
+        }),
+    withRedirect
+)(UsersClassContainer)
+
 //Рефакторинг mapDispatchToProps вторым параметром сразу вызываем AC в объекте сократив много кода
-export const UsersContainer = connect(mapStateToProps,
-    {
-        follow, unFollow, setCurrentPage, getUsers
-    })(UsersClassContainer)
+// export const UsersContainer = connect(mapStateToProps,
+//     {
+//         follow, unFollow, setCurrentPage, getUsers
+//     })(UsersClassContainer)
 //классовая компонента UsersClassContainer вызывается контейнерной компонентой UsersContainer

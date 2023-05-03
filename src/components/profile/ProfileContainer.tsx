@@ -36,7 +36,7 @@ export type MapDispatchToProps = {
     getUserProfile: (userId: number) => void
 }
 
-export class ProfileClassContainer extends React.Component
+class ProfileClassContainer extends React.Component
     <RouteComponentProps<{userId: number}> & ProfilePageType, AppRootStateType>{
 
     componentDidMount() {//только в этом методе можно делать сайд эффекты
@@ -78,7 +78,7 @@ let mapStateToProps = (state: AppRootStateType): MapStateToProps => {
 
 //что значит 2 вызова, вызывается та функция, которую вернул нам первый вызов функции compose
 //compose вернул нам функцию и мы ее вызываем, ту функцию, которую вернул compose
-export default compose(
+export default compose<React.ComponentType>(
     connect<MapStateToProps, MapDispatchToProps, {}, AppRootStateType>(mapStateToProps, {
         getUserProfile
     }),

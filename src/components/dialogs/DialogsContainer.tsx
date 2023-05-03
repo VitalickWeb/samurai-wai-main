@@ -34,8 +34,8 @@ export type MapDispatchToProps = {
     newDialogMessage: (text: string) => void
 }
 
-export type DialogMapStatePropsType = ReturnType<typeof mapStateToProps>
-export type DialogMapDispatchPropsType = ReturnType<typeof mapDispatchToProps>
+type DialogMapStatePropsType = ReturnType<typeof mapStateToProps>
+type DialogMapDispatchPropsType = ReturnType<typeof mapDispatchToProps>
 export type DialogPropsTypes = DialogMapStatePropsType & DialogMapDispatchPropsType
 
 
@@ -63,7 +63,7 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {//из 2у
     }
 }
 
-compose(
+export default compose<React.ComponentType>(
     connect(mapStateToProps, mapDispatchToProps),
     withRedirect
 )(Dialogs)

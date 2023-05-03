@@ -10,12 +10,14 @@ import {Music} from './components/music/Music';
 import {Setting} from "./components/settings/Setting";
 import {Route} from 'react-router-dom';
 import st from "./components/navigation/Navigation.module.css";
-import {DialogsContainer} from "./components/dialogs/DialogsContainer";
+
+import DialogsContainer from "./components/dialogs/DialogsContainer";
 import {FriendsContainer} from "./components/friends/FriendsContainer";
-import {UsersContainer} from "./components/users/UsersContainer";
-import {ProfileContainer} from "./components/profile/ProfileContainer";
+import UsersContainer from "./components/users/UsersContainer";
+import ProfileContainer from "./components/profile/ProfileContainer";
 import {HeaderContainer} from "./components/header/HeaderContainer";
 import {Login} from "./components/login/Login";
+
 
 const App = () => {
     //Страницы которые мы организовываем с помощью Route переключаются между собой с помощью URL браузера.

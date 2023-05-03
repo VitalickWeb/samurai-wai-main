@@ -7,7 +7,7 @@ type MapStateToProps = {
     isAuth: boolean
 }
 
-export let mapStateToPropsRedirectComponent = (state: AppRootStateType): MapStateToProps => {
+let mapStateToPropsRedirectComponent = (state: AppRootStateType): MapStateToProps => {
     return {
         isAuth: state.auth.isAuth
     }
